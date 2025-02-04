@@ -8,11 +8,31 @@
 # Description
 
 # Folder Structure
-- api: Django rest api that allows the React frontend to connect to
-- base: Django app that holds models and controllers
 - client: React frontend
-- project: Django project
+- project: Django backend
+    - api: Django rest api that allows the React frontend to connect to
+    - base: Django app that holds models and controllers
+    - project: Django project
 
+# Tech Stack
+## Front End
+- React
+- Typescript
+- Redux Toolkit
+- React-Router-Dom
+- Tailwind CSS
+- React Query
+- Headless UI
+- Axios
+- Clsx
+- React Icons
+- React Loading Skeleton
+
+## Back End
+- Django
+- Django Cors Headers
+- Django Rest Framework
+- Django Rest Framework JWT
 
 # Installation Instructions
 ```shell
