@@ -7,6 +7,12 @@
 
 # Description
 
+# Folder Structure
+- api: Django rest api that allows the React frontend to connect to
+- base: Django app that holds models and controllers
+- client: React frontend
+- project: Django project
+
 
 # Installation Instructions
 ```shell
