@@ -16,23 +16,23 @@
 
 # Tech Stack
 ## Front End
-- React
-- Typescript
-- Redux Toolkit
-- React-Router-Dom
-- Tailwind CSS
-- React Query
-- Headless UI
-- Axios
-- Clsx
-- React Icons
-- React Loading Skeleton
+- Typescript: Superset of javascript
+- React: Javascript UI library
+- React Router Dom: router library for React
+- React Icons: React icons library
+- React Loading Skeleton: React loading skeleton library
+- Redux Toolkit: Modern Redux library for React Redux
+- React Query: Rest data management library for React
+- Headless UI: Component library for React
+- Axios: Rest calls for Javascript
+- Tailwind CSS:
+- Clsx: Conditional classname utility library
 
 ## Back End
-- Django
-- Django Cors Headers
-- Django Rest Framework
-- Django Rest Framework JWT
+- Django: Python backend library
+- Django Cors Headers: Allows cors to connect to frontend
+- Django Rest Framework: Rest api framework library for Django
+- Django Rest Framework SimpleJWT: JWT library for Django Rest Framework
 
 # Installation Instructions
 ```shell
