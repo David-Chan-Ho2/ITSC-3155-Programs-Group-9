@@ -8,5 +8,6 @@ export interface IRegister extends IAuth {
 }
 
 export interface IToken {
-    token: string
+    refresh: string
+    access: string
 }

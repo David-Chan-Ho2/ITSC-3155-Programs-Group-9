@@ -38,13 +38,14 @@ function RegisterPage() {
                 autoComplete="current-password" />
             <Input
                 label="Confirm Password"
-                id="password"
+                id="password2"
+                name="password2"
                 type="password"
                 value={form.password2}
                 onChange={handleChange}
                 required
                 autoComplete="current-password" />
-            <Button disabled={register.isPending}>{register.isPending ? 'Loading...' : 'Register'}</Button>
+            <Button type="submit" disabled={register.isPending}>{register.isPending ? 'Loading...' : 'Register'}</Button>
         </Form>
 
     )

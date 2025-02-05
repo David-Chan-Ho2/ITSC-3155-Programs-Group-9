@@ -10,7 +10,7 @@ const useLogin = () => {
     return useMutation<IToken, Error, IAuth>({
         mutationFn: (data) => loginUser(data),
         onSuccess: (data) => {
-            dispatch(login(data.token))
+            dispatch(login(data))
             console.log('Login successful!')
         },
         onError: (error: any) => {

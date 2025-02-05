@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { IToken } from '../../types/auth.types'
 import { RootState } from '../store'
 
 export interface AuthState {
-  token: string | null
+  access: string | null
   isAuth: boolean
 }
 
 const initialState: AuthState = {
-  token: null,
+  access: null,
   isAuth: false
 }
 
@@ -15,12 +16,12 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<string>) => {
-      state.token = action.payload
+    login: (state, action: PayloadAction<IToken>) => {
+      state.access = action.payload.access
       state.isAuth = true
     },
     logout: (state) => {
-      state.token = null
+      state.access = null
       state.isAuth = false
     }
   },

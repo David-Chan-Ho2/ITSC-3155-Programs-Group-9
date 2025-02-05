@@ -3,8 +3,10 @@ import { useSelector } from "react-redux"
 import { Link, useLocation } from "react-router-dom"
 import { selectAuth } from "../../app/slices/authSlice"
 import { useAuth } from "../../hooks/useAuth"
+import { useAppDispatch } from '../../app/hooks'
 
 function Navbar() {
+    const dispatch = useAppDispatch()
     const { isAuth } = useSelector(selectAuth)
     const { logout } = useAuth()
     const { pathname } = useLocation()
@@ -15,7 +17,7 @@ function Navbar() {
                 <div className="mx-auto flex h-10 max-w-7xl items-center justify-end px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center space-x-6">
                         {isAuth ?
-                            <Link to="/" onClick={() => logout} className="text-sm font-medium">
+                            <Link to="/" onClick={() => dispatch(logout())} className="text-sm font-medium">
                                 Log out
                             </Link> :
                             <>

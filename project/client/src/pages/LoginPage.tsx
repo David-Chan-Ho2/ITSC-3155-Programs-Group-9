@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, redirect,  useNavigate } from "react-router-dom"
 import Button from "../components/buttons/Button"
 import Form from "../components/forms/Form"
 import Input from "../components/inputs/Input"
@@ -8,6 +8,7 @@ import { IAuth } from "../types/auth.types"
 
 function LoginPage() {
     const initForm = { email: '', password: '' }
+    const navigate = useNavigate();
 
     const { form, handleChange, handleSubmit } = useForm(initForm)
 
@@ -16,6 +17,7 @@ function LoginPage() {
     const onSubmit = (formData: IAuth) => {
         login.mutate(formData)
         console.log(formData)
+        navigate("/");
     }
 
     return (

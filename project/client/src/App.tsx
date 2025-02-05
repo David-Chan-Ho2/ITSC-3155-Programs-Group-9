@@ -3,6 +3,7 @@ import './App.css'
 import AuthLayout from './layouts/AuthLayout'
 import Layout from './layouts/Layout'
 import LoginPage from './pages/LoginPage'
+import MainPage from './pages/MainPage'
 import NoMatchPage from './pages/NoMatchPage'
 import RegisterPage from './pages/RegisterPage'
 
@@ -11,12 +12,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='' Component={Layout}>
-          <Route path='*' Component={NoMatchPage} />
+          <Route path='' Component={MainPage} />
 
           <Route path='' Component={AuthLayout}>
             <Route path='/register' Component={RegisterPage} />
             <Route path='/login' Component={LoginPage} />
           </Route>
+
+          <Route path='*' Component={NoMatchPage} />
         </Route>
       </Routes>
     </BrowserRouter>
