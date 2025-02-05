@@ -1,6 +1,7 @@
 from rest_framework import generics, filters
 from base.models import User
-from .serializers import UserSerializer
+from .serializers import UserSerializer, RegisterSerializer
+from rest_framework.permissions import AllowAny
 
 # List all users and create new users
 class UserListCreateView(generics.ListCreateAPIView):
@@ -13,4 +14,7 @@ class UserListCreateView(generics.ListCreateAPIView):
 class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-  
+
+class RegisterUserAPIView(generics.CreateAPIView):
+  permission_classes = (AllowAny,)
+  serializer_class = RegisterSerializer

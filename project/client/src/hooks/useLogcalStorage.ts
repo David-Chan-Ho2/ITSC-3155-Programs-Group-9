@@ -6,7 +6,13 @@ export const useLocalStorage = () => {
     }
 
     const getItem = (key: string) => {
-        return localStorage.getItem(key)
+        const item = localStorage.getItem(key)
+
+        if (!item) {
+            return 'false'
+        }
+
+        return item
     }
 
     const removeItem = (key: string) => {
