@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, filters
 from base.models import User
 from .serializers import UserSerializer
 
@@ -6,6 +6,8 @@ from .serializers import UserSerializer
 class UserListCreateView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['email', 'first_name', 'last_name']
 
 # Retrieve, update, or delete a specific user
 class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
