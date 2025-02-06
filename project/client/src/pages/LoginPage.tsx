@@ -8,7 +8,7 @@ import { IAuth } from "../types/auth.types"
 
 function LoginPage() {
     const initForm = { email: '', password: '' }
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const { form, handleChange, handleSubmit } = useForm(initForm)
 
@@ -17,7 +17,7 @@ function LoginPage() {
     const onSubmit = (formData: IAuth) => {
         login.mutate(formData)
         console.log(formData)
-        navigate("/");
+        navigate("/")
     }
 
     return (

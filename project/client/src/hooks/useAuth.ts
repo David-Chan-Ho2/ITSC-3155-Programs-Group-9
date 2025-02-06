@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
 import { loginUser, registerUser } from "../api/auth.api"
 import { useAppDispatch } from "../app/hooks"
-import { login, logout } from "../app/slices/authSlice"
+import { login } from "../app/slices/authSlice"
 import { IAuth, IToken } from "../types/auth.types"
 
 const useLogin = () => {
@@ -25,15 +25,9 @@ const useRegister = () => {
     })
 }
 
-const useLogout = () => {
-    const dispatch = useAppDispatch()
-    return dispatch(logout)
-}
-
 export const useAuth = () => {
     const register = useRegister()
     const login = useLogin()
-    const logout = useLogout()
 
-    return { register, login, logout }
+    return { register, login, }
 }
