@@ -9,6 +9,10 @@ function ProjectPage() {
 
     return (
         <ul>
+            <a href="/projects/create">
+                Add Project
+            </a>
+
             {data?.map((project: IProject) => (
                 <li key={project.id}>
                     <a href={`/projects/${project.id}`}>{project.name}</a>
