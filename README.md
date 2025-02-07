@@ -19,7 +19,7 @@
 - Typescript: Superset of javascript
 - React: Javascript UI library
 - React Router Dom: router library for React
-- React Icons: React icons library
+- Heroicons: React icons library
 - React Loading Skeleton: React loading skeleton library
 - Redux Toolkit: Modern Redux library for React Redux
 - React Query: Rest data management library for React
