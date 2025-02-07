@@ -7,10 +7,6 @@ export async function registerUser(auth: IAuth): Promise<void> {
 }
 
 export async function loginUser(auth: IAuth): Promise<IToken> {
-    const { data } = await axios.post<IToken>(`${BASE_URL}/token/`, auth, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
+    const { data } = await axios.post<IToken>(`${BASE_URL}/token/`, auth)
     return data
 }

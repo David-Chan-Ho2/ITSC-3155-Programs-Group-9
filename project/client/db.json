@@ -1,0 +1,16 @@
+{
+    "projects": [
+        {
+            "id": 1,
+            "name": "a name"
+        },
+        {
+            "id": 2,
+            "name": "another name"
+        }
+    ],
+    "users": {
+        "name": "typicode",
+        "email": "email"
+    }
+}

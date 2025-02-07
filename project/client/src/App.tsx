@@ -2,8 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import AuthLayout from './layouts/AuthLayout'
 import Layout from './layouts/Layout'
+import DashboardPage from './pages/DashboardPage'
 import LoginPage from './pages/LoginPage'
-import MainPage from './pages/MainPage'
 import NoMatchPage from './pages/NoMatchPage'
 import RegisterPage from './pages/RegisterPage'
 
@@ -12,7 +12,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='' Component={Layout}>
-          <Route path='' Component={MainPage} />
+          <Route path='' Component={DashboardPage} />
 
           <Route path='' Component={AuthLayout}>
             <Route path='/register' Component={RegisterPage} />
