@@ -10,8 +10,9 @@ function DashboardPage() {
   return (
     <ul>
       {data?.map((project: IProject) => (
-        <li key={project.id}>{project.name}</li>
-      ))}
+        <li key={project.id}>
+          <a href={`/projects/${project.id}`}>{project.name}</a>
+        </li>))}
     </ul>
   )
 }

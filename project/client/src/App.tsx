@@ -5,6 +5,7 @@ import Layout from './layouts/Layout'
 import DashboardPage from './pages/DashboardPage'
 import LoginPage from './pages/LoginPage'
 import NoMatchPage from './pages/NoMatchPage'
+import ProjectDetailPage from './pages/ProjectDetailPage'
 import RegisterPage from './pages/RegisterPage'
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path='' Component={Layout}>
           <Route path='' Component={DashboardPage} />
+          <Route path='/projects/:id' Component={ProjectDetailPage} />
 
           <Route path='' Component={AuthLayout}>
             <Route path='/register' Component={RegisterPage} />
