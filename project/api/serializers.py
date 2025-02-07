@@ -11,6 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
         
 
 class RegisterSerializer(serializers.ModelSerializer):
+    
     email = serializers.EmailField(
         required=True,
         validators=[UniqueValidator(queryset=User.objects.all())]
@@ -24,15 +25,18 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('password', 'password2', 'email')
-        extra_kwargs = {
-            'first_name': {'required': True},
-            'last_name': {'required': True}
-        }
 
+    def validate(self, data):
+        if data['password'] != data['password2']:
+            raise serializers.ValidationError({"password": "Passwords do not match."})
+        return data
+    
     def create(self, validated_data):
+        validated_data.pop('password2') 
         user = User.objects.create(
             email=validated_data['email']
         )
         user.set_password(validated_data['password'])
         user.save()
         return user
+    
