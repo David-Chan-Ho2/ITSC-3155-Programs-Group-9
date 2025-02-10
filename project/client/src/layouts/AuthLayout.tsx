@@ -1,4 +1,5 @@
-import { Link, Outlet } from "react-router-dom"
+import { useEffect } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import usePathname from "../hooks/usePathname"
 
 interface IAuthHeader {
@@ -24,28 +25,38 @@ function AuthHeader({ title, subtitle, label, to }: IAuthHeader) {
     )
 }
 
-function AuthLayout() {
+function AuthLayout({ children }: React.PropsWithChildren) {
     const pathname = usePathname()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (localStorage.getItem("access")) {
+            navigate("/")
+        }
+    }, [navigate])
 
     return (
-        <div className="mx-auto w-full max-w-sm lg:w-96">
-            {pathname === '/login' ?
-                <AuthHeader
-                    title='Log in to your account'
-                    subtitle='Not a member already?'
-                    label='Create an account'
-                    to='/register'
-                /> :
-                <AuthHeader
-                    title='Create your account'
-                    subtitle='Already a member?'
-                    label='Log in to your account'
-                    to='/login'
-                />
-            }
+        <div className="flex min-h-screen items-center justify-center">
+            <div className="w-full max-w-sm lg:w-96">
 
-            <div className="mt-10">
-                <Outlet />
+                {pathname === '/login' ?
+                    <AuthHeader
+                        title='Log in to your account'
+                        subtitle='Not a member already?'
+                        label='Create an account'
+                        to='/register'
+                    /> :
+                    <AuthHeader
+                        title='Create your account'
+                        subtitle='Already a member?'
+                        label='Log in to your account'
+                        to='/login'
+                    />
+                }
+
+                <div className="mt-4">
+                    {children}
+                </div>
             </div>
         </div>
     )

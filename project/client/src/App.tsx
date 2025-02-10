@@ -1,32 +1,49 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import AuthLayout from './layouts/AuthLayout'
+import ProtectedRoute from './components/route/ProtectedRoute'
 import Layout from './layouts/Layout'
-import DashboardPage from './pages/DashboardPage'
+import CalendarPage from './pages/CalendarPage'
+import CreateProjectPage from './pages/CreateProjectPage'
+import DocumentPage from './pages/DocumentPage'
+import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import NoMatchPage from './pages/NoMatchPage'
 import ProjectDetailPage from './pages/ProjectDetailPage'
 import ProjectPage from './pages/ProjectPage'
 import RegisterPage from './pages/RegisterPage'
-import TeamsPage from './pages/TeamsPage'
+import SettingPage from './pages/SettingPage'
+import TeamPage from './pages/TeamPage'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='' Component={Layout}>
-          <Route path='' Component={DashboardPage} />
-          <Route path='/teams' Component={TeamsPage} />
-          <Route path='/projects' Component={ProjectPage} />
-          <Route path='/projects/:id' Component={ProjectDetailPage} />
+        <Route element={<ProtectedRoute />}>
+          <Route Component={Layout}>
+            <Route path='/' Component={HomePage}  />
 
-          <Route path='' Component={AuthLayout}>
-            <Route path='/register' Component={RegisterPage} />
-            <Route path='/login' Component={LoginPage} />
+            <Route path='/projects' Component={ProjectPage} />
+            <Route path='/projects/create' Component={CreateProjectPage} />
+            <Route path='/projects/teams' Component={ProjectPage} />
+            <Route path='/projects/documents' Component={ProjectPage} />
+            <Route path='/projects/:id' Component={ProjectDetailPage} />
+
+            <Route path='/teams' Component={TeamPage} />
+            <Route path='/teams/:id' Component={TeamPage} />
+
+            <Route path='/documents' Component={DocumentPage} />
+            <Route path='/documents/:id' Component={DocumentPage} />
+
+            <Route path='/calendar' Component={CalendarPage} />
+
+            <Route path='/settings' Component={SettingPage} />
+
+            <Route path='*' Component={NoMatchPage} />
           </Route>
-
-          <Route path='*' Component={NoMatchPage} />
         </Route>
+
+        <Route path='/register' Component={RegisterPage} />
+        <Route path='/login' Component={LoginPage} />
       </Routes>
     </BrowserRouter>
   )
