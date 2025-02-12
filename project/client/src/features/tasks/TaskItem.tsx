@@ -11,7 +11,7 @@ function TaskItem({ task }: ITaskItem) {
 
   return (
     <div className="flex gap-5">
-      <input type="checkbox" checked={task.completed} onClick={() => completeTaskMutation.mutate(task)} />
+      <input type="checkbox" checked={task.completed} onChange={() => completeTaskMutation.mutate({ ...task, completed: !task.completed })} />
       <p className={clsx(task.completed ? 'line-through' : '')}>{task.title}</p>
     </div>
   )

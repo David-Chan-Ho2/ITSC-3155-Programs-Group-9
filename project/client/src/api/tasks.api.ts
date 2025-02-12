@@ -19,6 +19,7 @@ export async function createTask(task: Partial<ITask>): Promise<void> {
 }
 
 export async function updateTask(task: ITask): Promise<ITask> {
+    console.log(url + `/${task.id}`)
     const { data } = await axios.patch(url + `/${task.id}`, task)
     return data
 }

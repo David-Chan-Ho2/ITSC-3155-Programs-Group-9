@@ -13,7 +13,7 @@ function TaskList({ projectId }: ITaskList) {
     return (
         <ul>
             {tasks.map(task => (
-                <li key={task.id}>
+                <li key={`task-${task.id}`}>
                     <TaskItem task={task} />
                 </li>
             ))}
