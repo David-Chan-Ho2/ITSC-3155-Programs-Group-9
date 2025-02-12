@@ -15,16 +15,16 @@ export async function getTask(id: number): Promise<ITask> {
 }
 
 export async function createTask(task: Partial<ITask>): Promise<void> {
-    await axios.post(url, task)
+    const { data } = await axios.post(url, task)
+    return data
 }
 
 export async function updateTask(task: ITask): Promise<ITask> {
-    console.log(url + `/${task.id}`)
     const { data } = await axios.patch(url + `/${task.id}`, task)
     return data
 }
 
 export async function deleteTask(id: number): Promise<void> {
-    const { data } = await axios.delete(url + `${id}`)
+    const { data } = await axios.delete(url + `/${id}`)
     return data
 }

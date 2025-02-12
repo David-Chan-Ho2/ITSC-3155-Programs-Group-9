@@ -6,12 +6,14 @@ const useCreateTask = () => {
     const queryClient = useQueryClient()
 
     return useMutation<void, Error, Omit<ITask, 'id'>>({
-        mutationFn: (task) => createTask(task),
-        onSuccess: (_, task) => {
+        mutationFn: (newTask) => createTask(newTask),
+        onSuccess: (_, createdTask) => {
             console.log('Create Task')
-            queryClient.setQueryData(["tasks", task.projectId], (oldTasks: ITask[] | undefined) => {
-                return [...oldTasks, task]
+            queryClient.setQueryData(["tasks", createdTask.projectId], (oldTasks: ITask[] | undefined) => {
+                return oldTasks ? [...oldTasks, createdTask] : [createdTask];
             })
+
+            queryClient.invalidateQueries({ queryKey: ["tasks", createdTask.projectId] });
         },
         onError: (error: any) => {
             console.log(`Login failed: ${error.response?.data?.message || error.message}`)
