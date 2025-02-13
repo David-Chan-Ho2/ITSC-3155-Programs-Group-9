@@ -1,8 +1,8 @@
 import axios from 'axios'
-import IProject from '../types/projects.types'
+import IProject from "../types/projects.types"
 import { BASE_URL } from './base.api'
 
-const url = BASE_URL + '/projects/'
+const url = BASE_URL + 'projects/'
 
 export async function getProjects(): Promise<IProject[]> {
     const { data } = await axios.get(url)

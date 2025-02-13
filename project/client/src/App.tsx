@@ -12,6 +12,7 @@ import ProjectDetailPage from './pages/ProjectDetailPage'
 import ProjectPage from './pages/ProjectPage'
 import RegisterPage from './pages/RegisterPage'
 import SettingPage from './pages/SettingPage'
+import TaskDetailPage from './pages/TaskDetailPage'
 import TeamPage from './pages/TeamPage'
 
 function App() {
@@ -20,13 +21,15 @@ function App() {
       <Routes>
         <Route element={<ProtectedRoute />}>
           <Route Component={Layout}>
-            <Route path='/' Component={HomePage}  />
+            <Route path='/' Component={HomePage} />
 
             <Route path='/projects' Component={ProjectPage} />
             <Route path='/projects/create' Component={CreateProjectPage} />
             <Route path='/projects/teams' Component={ProjectPage} />
             <Route path='/projects/documents' Component={ProjectPage} />
             <Route path='/projects/:id' Component={ProjectDetailPage} />
+
+            <Route path='/tasks/:id' Component={TaskDetailPage} />
 
             <Route path='/teams' Component={TeamPage} />
             <Route path='/teams/:id' Component={TeamPage} />
