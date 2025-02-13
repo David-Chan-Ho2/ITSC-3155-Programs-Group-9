@@ -1,4 +1,4 @@
-import useTasks from "../../hooks/useTasks"
+import { useTasks } from "../../app/hooks"
 import TaskItem from "./TaskItem"
 
 interface ITaskList {

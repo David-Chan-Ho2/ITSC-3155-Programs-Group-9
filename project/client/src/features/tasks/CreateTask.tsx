@@ -1,10 +1,9 @@
 import { Button } from "@headlessui/react"
-import { useAppSelector } from "../../app/hooks"
+import { PlusIcon } from "@heroicons/react/24/solid"
+import { useAppSelector, useCreateTask, useForm } from "../../app/hooks"
 import { selectUser } from "../../app/slices/userSlice"
 import Form from "../../components/forms/Form"
 import Input from "../../components/inputs/Input"
-import useCreateTask from "../../hooks/useCreateTask"
-import { useForm } from "../../hooks/useForm"
 import { ITask } from "../../types/tasks.types"
 
 interface ICreateTask {
@@ -20,18 +19,20 @@ function CreateTask({ projectId }: ICreateTask) {
         projectId,
         title: '',
         completed: false,
-        shown: true
     })
 
     const onSubmit = () => {
-        console.log(form)
-        createTask.mutate(form)
+        if (form.title.trim() !== '') {
+            createTask.mutate(form)
+        }
     }
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
-            <Input label="Title" value={form.title} name="title" onChange={handleChange} />
-            <Button type="submit">Submit</Button>
+        <Form className="flex gap-3 items-center" onSubmit={handleSubmit(onSubmit)}>
+            <Input value={form.title} name="title" onChange={handleChange} />
+            <Button type="submit" className="h-8 w-8 border outline-gray-400">
+                <PlusIcon className="text-gray-500" />
+            </Button>
         </Form>
     )
 }

@@ -3,6 +3,6 @@ export interface ITask {
     projectId: number
     id: number
     title: string
+    description?: string
     completed: boolean
-    shown: boolean
 }
