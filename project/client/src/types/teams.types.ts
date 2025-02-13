@@ -1,9 +1,8 @@
-export interface IUser {
+export interface ITeam {
     id: number
     name: string
-    title: string
-    department: string
     email: string
+    department: string
     role: string
     image: string
 }

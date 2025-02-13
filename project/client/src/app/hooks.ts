@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { loginUser, registerUser } from "../api/auth.api"
 import { getEvents } from "../api/events.api"
 import { createProject, getProject, getProjects } from "../api/projects.api"
-import { createTask, deleteTask, getTasks, updateTask } from "../api/tasks.api"
+import { createTask, deleteTask, getTask, getTasks, updateTask } from "../api/tasks.api"
 import { getTeams } from "../api/teams.api"
 import { login } from "../app/slices/authSlice"
 import { IAuth, IToken } from "../types/auth.types"
@@ -19,6 +19,8 @@ import type { AppDispatch, RootState } from './store'
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
+
+// Auth
 const useLogin = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -55,6 +57,7 @@ export const useAuth = () => {
     return { register, login, }
 }
 
+// Project
 export const useCreateProject = () => {
     return useMutation<void, Error, Omit<IProject, 'id'>>({
         mutationFn: (data) => createProject(data),
@@ -65,6 +68,23 @@ export const useCreateProject = () => {
             console.log(`Login failed: ${error.response?.data?.message || error.message}`)
         }
     })
+}
+
+export const useProject = (id: number) => {
+    return useQuery<IProject, Error>({ queryKey: ['project', id], queryFn: () => getProject(id) })
+}
+
+export const useProjects = () => {
+    return useQuery<IProject[], Error>({ queryKey: ['projects'], queryFn: getProjects })
+}
+
+// Task
+export const useTasks = (projectId: number) => {
+    return useQuery<ITask[], Error>({ queryKey: ['tasks', projectId], queryFn: () => getTasks(projectId) })
+}
+
+export const useTask = (taskId: number) => {
+    return useQuery<ITask, Error>({ queryKey: ['task', taskId], queryFn: () => getTask(taskId) })
 }
 
 export const useCreateTask = () => {
@@ -86,6 +106,19 @@ export const useCreateTask = () => {
     })
 }
 
+export const useUpdateTask = () => {
+    const queryClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: (task: Omit<ITask, 'userid'>) => updateTask(task),
+        onSuccess: (_, task) => {
+            queryClient.setQueryData(["tasks"], (oldTasks: ITask[] | undefined) => {
+                return oldTasks?.map((t) => (t.id === task.id ? { ...t, ...task } : t)) || []
+            })
+            queryClient.invalidateQueries({ queryKey: ["tasks", task.projectId] })
+        },
+    })
+}
 
 export const useDeleteTask = () => {
     const queryClient = useQueryClient()
@@ -106,11 +139,17 @@ export const useDeleteTask = () => {
     })
 }
 
-
+// Events
 export const useEvents = () => {
     return useQuery<IEvent[], Error>({ queryKey: ['events'], queryFn: getEvents })
 }
 
+// Teams
+export const useTeams = () => {
+    return useQuery<ITeam[], Error>({ queryKey: ['teams'], queryFn: getTeams })
+}
+
+// Form
 export const useForm = <T extends Record<string, any>>(initialState: T) => {
     const [form, setForm] = useState<T>(initialState)
 
@@ -159,32 +198,3 @@ export const usePathname = () => {
     return pathname
 }
 
-export const useProject = (id: number) => {
-    return useQuery<IProject, Error>({ queryKey: ['project', id], queryFn: () => getProject(id) })
-}
-
-
-export const useProjects = () => {
-    return useQuery<IProject[], Error>({ queryKey: ['projects'], queryFn: getProjects })
-}
-
-export const useTasks = (projectId: number) => {
-    return useQuery<ITask[], Error>({ queryKey: ['tasks', projectId], queryFn: () => getTasks(projectId) })
-}
-
-export const useTeams = () => {
-    return useQuery<ITeam[], Error>({ queryKey: ['teams'], queryFn: getTeams })
-}
-
-export const useUpdateTask = () => {
-    const queryClient = useQueryClient()
-
-    return useMutation({
-        mutationFn: (task: ITask) => updateTask(task),
-        onSuccess: (_, task) => {
-            queryClient.setQueryData(["tasks", task.projectId], (oldTasks: ITask[] | undefined) => {
-                return oldTasks?.map((t) => (t.id === task.id ? { ...t, completed: !t.completed } : t)) || []
-            })
-        },
-    })
-}

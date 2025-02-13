@@ -1,22 +1,21 @@
 import { Button } from "@headlessui/react"
 import { useNavigate } from "react-router-dom"
+import { useCreateProject, useForm } from "../app/hooks"
 import Form from "../components/forms/Form"
 import Input from "../components/inputs/Input"
-import useCreateProject from "../hooks/useCreateProject"
-import { useForm } from "../hooks/useForm"
 import IProject from "../types/projects.types"
 
 function CreateProjectPage() {
     const navigate = useNavigate()
-    const create = useCreateProject()
+    const createProject = useCreateProject()
 
     const { form, handleChange, handleSubmit } = useForm({
-        name: ''
+        name: '',
+        description: '',
     })
 
     const onSubmit = (formData: Omit<IProject, 'id'>) => {
-        console.log(formData)
-        create.mutate(formData)
+        createProject.mutate(formData)
         navigate("/projects")
     }
 
@@ -31,7 +30,16 @@ function CreateProjectPage() {
                     value={form.name}
                     onChange={handleChange}
                     required
-                    autoComplete="name" />
+                />
+                <Input
+                    label="Description"
+                    id="description"
+                    name="description"
+                    type="text"
+                    value={form.description}
+                    onChange={handleChange}
+                    required
+                />
                 <Button type="submit">
                     Create
                 </Button>

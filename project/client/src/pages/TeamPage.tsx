@@ -1,7 +1,7 @@
-import useUsers from "../hooks/useUsers"
+import { useTeams } from "../app/hooks"
 
-export default function TeamsPage() {
-    const { data, isLoading, error } = useUsers()
+export default function TeamPage() {
+    const { data, isLoading, error } = useTeams()
 
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>
@@ -18,9 +18,6 @@ export default function TeamsPage() {
                     </th>
                     <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                         Status
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                        Role
                     </th>
                     <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
                         <span className="sr-only">Edit</span>
@@ -42,7 +39,7 @@ export default function TeamsPage() {
                             </div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                            <div className="text-gray-900">{person.title}</div>
+                            <div className="text-gray-900">{person.role}</div>
                             <div className="mt-1 text-gray-500">{person.department}</div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
@@ -50,7 +47,6 @@ export default function TeamsPage() {
                                 Active
                             </span>
                         </td>
-                        <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{person.role}</td>
                         <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                             <a href="#" className="text-indigo-600 hover:text-indigo-900">
                                 Edit<span className="sr-only">, {person.name}</span>

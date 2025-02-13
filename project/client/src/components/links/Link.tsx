@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { LinkProps, Link as ReactLink } from 'react-router-dom'
-import usePathname from '../../hooks/usePathname'
+import { usePathname } from '../../app/hooks'
 
 function Link({ to, ...rest }: LinkProps) {
     const pathname = usePathname()

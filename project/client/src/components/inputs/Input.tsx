@@ -1,13 +1,13 @@
 import Label from "./Label"
 
 interface IInput extends React.InputHTMLAttributes<HTMLInputElement> {
-    label: string
+    label?: string
 }
 
 function Input({ label, ...rest }: IInput) {
     return (
         <div>
-            <Label htmlFor={label}>{label}</Label>
+            {label && <Label htmlFor={label}>{label}</Label>}
             <div className="mt-2">
                 <input
                     {...rest}

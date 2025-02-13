@@ -10,7 +10,6 @@ import { queryClient } from './config/queryClient'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
 
-
 const container = document.getElementById('root')!
 const root = createRoot(container)
 

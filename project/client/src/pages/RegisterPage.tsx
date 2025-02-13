@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router-dom"
+import { useAuth, useForm } from "../app/hooks"
 import Button from "../components/buttons/Button"
 import Form from "../components/forms/Form"
 import Input from "../components/inputs/Input"
-import { useAuth } from "../hooks/useAuth"
-import { useForm } from "../hooks/useForm"
 import AuthLayout from "../layouts/AuthLayout"
 import { IRegister } from "../types/auth.types"
 

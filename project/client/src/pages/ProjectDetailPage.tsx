@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
+import { useProject } from "../app/hooks"
+import CreateTask from "../features/tasks/CreateTask"
 import TaskList from "../features/tasks/TaskList"
-import useProject from "../hooks/useProject"
 
 function ProjectDetailPage() {
     const { id } = useParams<{ id: string }>()
@@ -13,6 +14,7 @@ function ProjectDetailPage() {
         <div>
             <p>{project?.name}</p>
             <TaskList projectId={Number(id)} />
+            <CreateTask projectId={Number(id)} />
         </div>
     )
 }

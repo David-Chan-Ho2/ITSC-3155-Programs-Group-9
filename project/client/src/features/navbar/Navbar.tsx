@@ -2,6 +2,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
+import { useState } from 'react'
 import { useSelector } from "react-redux"
 import { NavLink, useLocation, useNavigate } from "react-router-dom"
 import { useAppDispatch } from '../../app/hooks'
@@ -12,33 +13,14 @@ function Navbar() {
     const { isAuth } = useSelector(selectAuth)
     const { pathname } = useLocation()
     const navigate = useNavigate()
-
-    const links = [
-        {
-            name: 'Dashboard',
-            to: '/',
-        },
-        {
-            name: 'Team',
-            to: '/teams',
-        },
-        {
-            name: 'Project',
-            to: '/projects',
-        },
-        {
-            name: 'Calender',
-            to: '/calender',
-        },
-        {
-            name: 'Documents',
-            to: '/documents',
-        },
-        {
-            name: 'Reports',
-            to: '/reports',
-        }
-    ]
+    const [links, setLinks] = useState([
+        { name: 'Home', to: '/', active: true },
+        { name: 'Team', to: '/teams', active: false },
+        { name: 'Project', to: '/projects', active: false },
+        { name: 'Calendar', to: '/calendar', active: false },
+        { name: 'Documents', to: '/documents', active: false }
+    ])
+    const [activeLink, setActiveLink] = useState('/')
 
     const onLogout = () => {
         dispatch(logout())
@@ -51,11 +33,13 @@ function Navbar() {
                 <div className="flex h-16 justify-between">
                     <div className="flex px-2 lg:px-0">
                         <div className="flex shrink-0 items-center">
-                            <img
-                                alt="Your Company"
-                                src="https://placehold.co/16x16/EEE/31343C"
-                                className="h-8 w-auto"
-                            />
+                            <NavLink to="/">
+                                <img
+                                    alt="Your Company"
+                                    src="https://placehold.co/16x16/EEE/31343C"
+                                    className="h-8 w-auto"
+                                />
+                            </NavLink>
                         </div>
                         <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
                             {links.map(link => (
@@ -63,11 +47,12 @@ function Navbar() {
                                     key={link.to}
                                     to={link.to}
                                     className={clsx(
-                                        "inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium",
-                                        link.to === "/" ?
-                                            (pathname === "/" ? "text-gray-900" : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700") :
-                                            (pathname.startsWith(link.to) ? "text-gray-900" : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700")
+                                        "inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium",
+                                        link.to === activeLink ?
+                                            "border-indigo-500 text-gray-900" :
+                                            "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
                                     )}
+                                    onClick={() => setActiveLink(link.to)}
                                 >
                                     {link.name}
                                 </NavLink>
@@ -128,7 +113,7 @@ function Navbar() {
                                 </MenuItem>
                                 <MenuItem>
                                     <a
-                                        href="#"
+                                        onClick={onLogout}
                                         className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                                     >
                                         Sign out
@@ -172,7 +157,7 @@ function Navbar() {
                                 </MenuItem>
                                 <MenuItem>
                                     <a
-                                        href="#"
+                                        onClick={onLogout}
                                         className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                                     >
                                         Sign out

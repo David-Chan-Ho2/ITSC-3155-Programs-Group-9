@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import usePathname from "../hooks/usePathname"
+import { usePathname } from "../app/hooks"
 
 interface IAuthHeader {
     title: string

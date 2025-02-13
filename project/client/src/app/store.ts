@@ -2,9 +2,11 @@ import { Action, combineReducers, createStore, ThunkAction } from '@reduxjs/tool
 import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import authReducer from './slices/authSlice'
+import userReducer from './slices/userSlice'
 
 const rootReducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  user: userReducer
 })
 
 const persistConfig = {
