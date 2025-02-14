@@ -3,11 +3,11 @@ import { IAuth, IToken } from '../types/auth.types'
 import { BASE_URL } from './base.api'
 
 export async function registerUser(auth: IAuth): Promise<void> {
-    await axios.post(BASE_URL + '/api/register/', auth)
+    await axios.post(BASE_URL + 'register/', auth)
 }
 
 export async function loginUser(auth: IAuth): Promise<IToken> {
-    const { data } = await axios.post<IToken>(`${BASE_URL}/api/token/`, auth)
+    const { data } = await axios.post<IToken>(BASE_URL + 'token/', auth)
     localStorage.setItem("access", data.access)
     localStorage.setItem("refresh", data.refresh)
     return data
@@ -16,7 +16,7 @@ export async function loginUser(auth: IAuth): Promise<IToken> {
 export const refreshToken = async () => {
     try {
         const refresh = localStorage.getItem("refresh")
-        const response = await axios.post(`${BASE_URL}/refresh/`, { refresh })
+        const response = await axios.post(BASE_URL + 'refresh/', { refresh })
         localStorage.setItem("access", response.data.access)
         return response.data.access
     } catch (error) {

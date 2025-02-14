@@ -10,21 +10,22 @@ export async function getProjects(): Promise<IProject[]> {
 }
 
 export async function getProject(id: number): Promise<IProject> {
-    const { data } = await axios.get(url + `${id}`)
+    const { data } = await axios.get(url + id)
     return data
 }
 
 export async function createProject(project: Partial<IProject>): Promise<void> {
-    await axios.post(url, project)
+    const { data } = await axios.post(url, project)
+    return data
 }
 
 export async function updateProject(id: number, project: Partial<IProject>): Promise<IProject> {
-    const { data } = await axios.put(url + `${id}`, project)
+    const { data } = await axios.put(url + id, project)
     return data
 }
 
 export async function deleteProject(id: number): Promise<void> {
-    const { data } = await axios.delete(url + `${id}`)
+    const { data } = await axios.delete(url + id)
     return data
 }
 
