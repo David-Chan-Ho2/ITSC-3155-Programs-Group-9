@@ -4,7 +4,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from "react-router-dom"
 import { loginUser, registerUser } from "../api/auth.api"
 import { getEvents } from "../api/events.api"
-import { createProject, getProject, getProjects } from "../api/projects.api"
+import { createProject, deleteProject, getProject, getProjects, updateProject } from "../api/projects.api"
 import { createTask, deleteTask, getTask, getTasks, updateTask } from "../api/tasks.api"
 import { getTeams } from "../api/teams.api"
 import { login } from "../app/slices/authSlice"
@@ -78,6 +78,39 @@ export const useProjects = () => {
     return useQuery<IProject[], Error>({ queryKey: ['projects'], queryFn: getProjects })
 }
 
+export const useUpdateProject = () => {
+    const queryClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: (project: IProject) => updateProject(project),
+        onSuccess: (_, project) => {
+            queryClient.setQueryData(["projects"], (oldProjects: IProject[] | undefined) => {
+                return oldProjects?.map((t) => (t.id === project.id ? { ...t, ...project } : t)) || []
+            })
+            queryClient.invalidateQueries({ queryKey: ["projects", project.id] })
+        },
+    })
+}
+
+export const useDeleteProject = () => {
+    const queryClient = useQueryClient()
+
+    return useMutation<void, Error, number>({
+        mutationFn: (projectId) => deleteProject(projectId),
+        onSuccess: (_, projectId) => {
+            console.log('Delete Project')
+            queryClient.setQueryData(["projects"], (oldProjects: IProject[] | undefined) => {
+                if (!oldProjects) return []
+                return oldProjects.filter((project) => project.id !== projectId)
+            })
+            queryClient.invalidateQueries({ queryKey: ["projects"] })
+        },
+        onError: (error: any) => {
+            console.log(`Project delete failed: ${error.response?.data?.message || error.message}`)
+        }
+    })
+}
+
 // Task
 export const useTasks = (projectId: number) => {
     return useQuery<ITask[], Error>({ queryKey: ['tasks', projectId], queryFn: () => getTasks(projectId) })
@@ -134,7 +167,7 @@ export const useDeleteTask = () => {
             queryClient.invalidateQueries({ queryKey: ["tasks"] })
         },
         onError: (error: any) => {
-            console.log(`Login failed: ${error.response?.data?.message || error.message}`)
+            console.log(`Task delete failed: ${error.response?.data?.message || error.message}`)
         }
     })
 }

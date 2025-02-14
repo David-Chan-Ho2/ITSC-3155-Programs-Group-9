@@ -19,8 +19,8 @@ export async function createProject(project: Partial<IProject>): Promise<void> {
     return data
 }
 
-export async function updateProject(id: number, project: Partial<IProject>): Promise<IProject> {
-    const { data } = await axios.put(url + id, project)
+export async function updateProject(project: IProject): Promise<IProject> {
+    const { data } = await axios.put(url + project.id, project)
     return data
 }
 

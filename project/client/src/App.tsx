@@ -14,6 +14,7 @@ import RegisterPage from './pages/RegisterPage'
 import SettingPage from './pages/SettingPage'
 import TaskDetailPage from './pages/TaskDetailPage'
 import TeamPage from './pages/TeamPage'
+import UpdateProjectPage from './pages/UpdatetProjectPage'
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
             <Route path='/projects/teams' Component={ProjectPage} />
             <Route path='/projects/documents' Component={ProjectPage} />
             <Route path='/projects/:id' Component={ProjectDetailPage} />
-
+            <Route path='/projects/:id/update' Component={UpdateProjectPage} />
+    
             <Route path='/tasks/:id' Component={TaskDetailPage} />
 
             <Route path='/teams' Component={TeamPage} />
