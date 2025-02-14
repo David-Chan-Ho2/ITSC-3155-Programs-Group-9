@@ -5,4 +5,5 @@ export interface ITeam {
     department: string
     role: string
     image: string
+    projects: number[]
 }

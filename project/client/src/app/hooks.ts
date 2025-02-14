@@ -7,6 +7,7 @@ import { getEvents } from "../api/events.api"
 import { createProject, deleteProject, getProject, getProjects, updateProject } from "../api/projects.api"
 import { createTask, deleteTask, getTask, getTasks, updateTask } from "../api/tasks.api"
 import { getTeams } from "../api/teams.api"
+import { getUserProjects } from '../api/users.api'
 import { login } from "../app/slices/authSlice"
 import { IAuth, IToken } from "../types/auth.types"
 import { IEvent } from "../types/events.types"
@@ -180,6 +181,11 @@ export const useEvents = () => {
 // Teams
 export const useTeams = () => {
     return useQuery<ITeam[], Error>({ queryKey: ['teams'], queryFn: getTeams })
+}
+
+// Users
+export const useUserProjects = (userId: number) => {
+    return useQuery<IProject[], Error>({ queryKey: ['users', userId], queryFn: () => getUserProjects(userId) })
 }
 
 // Form

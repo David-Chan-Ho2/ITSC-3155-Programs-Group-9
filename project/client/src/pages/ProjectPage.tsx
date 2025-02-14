@@ -21,6 +21,8 @@ function ProjectPage() {
                     <tr>
                         <th>Name</th>
                         <th>Host</th>
+                        <th className="px-3"></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,16 +34,15 @@ function ProjectPage() {
                             <td>
                                 {project.description}
                             </td>
-                            <td>
-                                {project.name}
+                            <td className="px-3">
+                                <Button>
+                                    <NavLink to={`/projects/${project.id}/update`}>
+                                        Edit
+                                    </NavLink>
+                                </Button>
                             </td>
                             <td>
-                                <NavLink to={`/projects/${project.id}/update`}>
-                                    Edit
-                                </NavLink>
-                            </td>
-                            <td>
-                                <Button onClick={() => onDelete(Number(project.id))}>
+                                <Button className="bg-red-500 hover:bg-red-300" onClick={() => onDelete(Number(project.id))}>
                                     Delete
                                 </Button>
                             </td>
@@ -50,7 +51,9 @@ function ProjectPage() {
                 </tbody>
             </table>
 
-            <NavLink to="/projects/create">Create Project</NavLink>
+            <Button className="mt-10 bg-white outline outline-2 outline-gray-300 text-black hover:bg-gray-300">
+                <NavLink to="/projects/create">Create Project</NavLink>
+            </Button>
         </div>
     )
 }
