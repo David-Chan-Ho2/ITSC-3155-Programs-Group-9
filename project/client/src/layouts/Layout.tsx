@@ -22,7 +22,7 @@ import {
 } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import Logo from '../components/logo/Logo'
 
 interface ILink {
@@ -49,6 +49,15 @@ function Layout() {
         { name: 'Calendar', href: '/calendar', icon: CalendarIcon, current: false },
         { name: 'Documents', href: '/documents', icon: DocumentDuplicateIcon, current: false },
     ])
+
+    const onLink = (href: string) => {
+        setNavigation(prevNav =>
+            prevNav.map(nav => ({
+                ...nav,
+                current: nav.href === href
+            }))
+        )
+    }
 
     return (
         <div>
@@ -79,17 +88,18 @@ function Layout() {
                             <nav className="flex flex-1 flex-col">
                                 <ul role="list" className="flex flex-1 flex-col gap-y-7">
                                     <li>
-                                        <ul role="list" className="-mx-2 space-y-1">
+                                        {/* <ul role="list" className="-mx-2 space-y-1">
                                             {navigation.map((item) => (
                                                 <li key={item.name}>
                                                     <a
                                                         href={item.href}
                                                         className={clsx(
-                                                            item.current
+                                                            item.href === active
                                                                 ? 'bg-gray-50 text-indigo-600'
                                                                 : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
                                                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                                                         )}
+                                                        onClick={() => setActive(item.href)}
                                                     >
                                                         <item.icon
                                                             aria-hidden="true"
@@ -102,7 +112,7 @@ function Layout() {
                                                     </a>
                                                 </li>
                                             ))}
-                                        </ul>
+                                        </ul> */}
                                     </li>
                                     <li className="mt-auto">
                                         <a
@@ -136,14 +146,15 @@ function Layout() {
                                 <ul role="list" className="-mx-2 space-y-1">
                                     {navigation.map((item) => (
                                         <li key={item.name}>
-                                            <a
-                                                href={item.href}
+                                            <Link
+                                                to={item.href}
                                                 className={clsx(
                                                     item.current
                                                         ? 'bg-gray-50 text-indigo-600'
                                                         : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
                                                     'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                                                 )}
+                                                onClick={() => onLink(item.href)}
                                             >
                                                 <item.icon
                                                     aria-hidden="true"
@@ -153,7 +164,7 @@ function Layout() {
                                                     )}
                                                 />
                                                 {item.name}
-                                            </a>
+                                            </Link>
                                         </li>
                                     ))}
                                 </ul>
