@@ -10,7 +10,7 @@ function AbridgeProjects() {
     if (error) return <p>Error: {error.message}</p>
 
     return (
-        <table>
+        <table className="text-left">
             <caption>Projects</caption>
             <thead>
                 <tr>
