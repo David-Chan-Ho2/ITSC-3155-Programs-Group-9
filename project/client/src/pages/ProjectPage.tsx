@@ -16,6 +16,10 @@ function ProjectPage() {
 
     return (
         <div>
+            <Button className="mb-10">
+                <NavLink to="/projects/create">Create Project</NavLink>
+            </Button>
+
             <table>
                 <thead>
                     <tr>
@@ -50,10 +54,6 @@ function ProjectPage() {
                     ))}
                 </tbody>
             </table>
-
-            <Button className="mt-10 bg-white outline outline-2 outline-gray-300 text-black hover:bg-gray-300">
-                <NavLink to="/projects/create">Create Project</NavLink>
-            </Button>
         </div>
     )
 }

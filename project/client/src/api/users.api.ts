@@ -7,11 +7,13 @@ const url = BASE_URL + 'users/'
 export async function getUserProjects(userId: number): Promise<IProject[]> {
     const { data } = await axios.get(url + userId)
     const projects = data['projects']
-    const updatedData: Set<IProject> = new Set()
+    const updatedData = []
+
     for (let project of projects) {
         const { data } = await axios.get(BASE_URL + 'projects/' + Number(project))
-        updatedData.add(data)
+        updatedData.push(data)
     }
-    return Array.from(updatedData)
+
+    return updatedData
 }
 

@@ -1,5 +1,8 @@
+import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
+import { useAppDispatch } from './app/hooks'
+import { login } from './app/slices/authSlice'
 import ProtectedRoute from './components/route/ProtectedRoute'
 import Layout from './layouts/Layout'
 import CalendarPage from './pages/CalendarPage'
@@ -17,6 +20,15 @@ import TeamPage from './pages/TeamPage'
 import UpdateProjectPage from './pages/UpdatetProjectPage'
 
 function App() {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(login({
+      access: "1111",
+      id: 1
+    }))
+  }, [])
+
   return (
     <BrowserRouter>
       <Routes>
@@ -30,7 +42,7 @@ function App() {
             <Route path='/projects/documents' Component={ProjectPage} />
             <Route path='/projects/:id' Component={ProjectDetailPage} />
             <Route path='/projects/:id/update' Component={UpdateProjectPage} />
-    
+
             <Route path='/tasks/:id' Component={TaskDetailPage} />
 
             <Route path='/teams' Component={TeamPage} />

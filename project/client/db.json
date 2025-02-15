@@ -30,41 +30,14 @@
       "description": "nnnnhehehehhh"
     }
   ],
-  "teams": [
+  "board": [
     {
       "id": 1,
-      "name": "Alice Johnson",
-      "email": "alice.johnson@student.edu",
-      "department": "Computer Science",
-      "role": "Team Lead",
-      "image": "https://randomuser.me/api/portraits/women/10.jpg"
-    },
-    {
-      "id": 2,
-      "name": "Bob Smith",
-      "email": "bob.smith@student.edu",
-      "department": "Information Technology",
-      "role": "Developer",
-      "image": "https://randomuser.me/api/portraits/men/11.jpg"
-    },
-    {
-      "id": 3,
-      "name": "Charlie Davis",
-      "email": "charlie.davis@student.edu",
-      "department": "Mechanical Engineering",
-      "role": "Designer",
-      "image": "https://randomuser.me/api/portraits/men/12.jpg"
-    },
-    {
-      "id": 4,
-      "name": "Dr. John Williams",
-      "email": "john.williams@college.edu",
-      "department": "Mechanical Engineering",
-      "role": "Associate Professor",
-      "image": "https://randomuser.me/api/portraits/men/21.jpg",
-      "mentor_id": 5
+      "projectId": 1,
+      "colunns": []
     }
   ],
+  "teams": [],
   "users": [
     {
       "id": 1,
@@ -74,7 +47,8 @@
       "role": "Team Lead",
       "image": "https://randomuser.me/api/portraits/women/10.jpg",
       "projects": [
-        1,2
+        1,
+        2
       ]
     },
     {
