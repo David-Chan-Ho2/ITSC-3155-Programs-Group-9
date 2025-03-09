@@ -1,6 +1,7 @@
 import clsx from "clsx"
 import { useDeleteTask, useUpdateTask } from "../../app/hooks"
 import { ITask } from "../../types/tasks.types"
+import Button from "../../components/buttons/Button"
 
 interface ITaskItem {
   task: ITask
@@ -22,9 +23,9 @@ function TaskItem({ task }: ITaskItem) {
     <div className="flex gap-5">
       <input type="checkbox" checked={task.completed} onChange={onCompleteTask} />
       <a className={clsx(task.completed ? 'line-through' : '')} href={`/tasks/${task.id}`}>{task.title}</a>
-      <button onClick={onDeleteTask}>
+      <Button onClick={onDeleteTask}>
         x
-      </button>
+      </Button>
     </div>
   )
 }

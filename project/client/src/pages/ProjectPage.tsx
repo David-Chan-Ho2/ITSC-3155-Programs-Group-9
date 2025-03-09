@@ -15,7 +15,7 @@ function ProjectPage() {
     }
 
     return (
-        <div>
+        <>
             <Button className="mb-10">
                 <NavLink to="/projects/create">Create Project</NavLink>
             </Button>
@@ -54,7 +54,7 @@ function ProjectPage() {
                     ))}
                 </tbody>
             </table>
-        </div>
+        </>
     )
 }
 

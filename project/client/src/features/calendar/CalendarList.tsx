@@ -17,11 +17,6 @@ function CalendarList() {
             plugins={[listPlugin]}
             initialView="listWeek"
             events={data}
-            headerToolbar={{
-                left: 'prev,next today',
-                center: 'title',
-                right: 'listWeek',
-            }}
         />
     )
 }

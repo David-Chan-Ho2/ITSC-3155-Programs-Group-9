@@ -3,9 +3,9 @@ import Calendar from "../features/calendar/Calendar"
 
 const CalendarPage: React.FC = () => {
     return (
-        <div>
+        <>
             <Calendar />
-        </div>
+        </>
     )
 }
 

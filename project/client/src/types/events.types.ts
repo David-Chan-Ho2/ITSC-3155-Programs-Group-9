@@ -6,4 +6,6 @@ export interface IEvent {
     allDay: boolean
     color: string
     backgroundColor: string
+    updated: string
+    created: string
 }

@@ -1,3 +1,4 @@
+import Button from '../components/buttons/Button'
 import Form from '../components/forms/Form'
 import Input from '../components/inputs/Input'
 
@@ -13,12 +14,12 @@ function SettingPage() {
                             className="size-24 flex-none rounded-lg bg-gray-800 object-cover"
                         />
                         <div>
-                            <button
+                            <Button
                                 type="button"
                                 className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 text-white"
                             >
                                 Change avatar
-                            </button>
+                            </Button>
                             <p className="mt-2 text-xs/5 text-gray-400">JPG, GIF or PNG. 1MB max.</p>
                         </div>
                     </div>
@@ -55,12 +56,12 @@ function SettingPage() {
                 </div>
 
                 <div className="mt-8 flex">
-                    <button
+                    <Button
                         type="submit"
                         className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 text-white"
                     >
                         Save
-                    </button>
+                    </Button>
                 </div>
             </Form>
 
@@ -104,12 +105,12 @@ function SettingPage() {
                     </div>
 
                     <div className="mt-8 flex">
-                        <button
+                        <Button
                             type="submit"
                             className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 text-white"
                         >
                             Save
-                        </button>
+                        </Button>
                     </div>
                 </Form>
             </div>
@@ -124,12 +125,12 @@ function SettingPage() {
                 </div>
 
                 <Form className="flex items-start md:col-span-2">
-                    <button
+                    <Button
                         type="submit"
                         className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold shadow-sm hover:bg-red-400 text-white"
                     >
                         Yes, delete my account
-                    </button>
+                    </Button>
                 </Form>
             </div>
         </>

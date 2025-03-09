@@ -5,4 +5,6 @@ export interface ITask {
     title: string
     description?: string
     completed: boolean
+    updated: string
+    created: string
 }

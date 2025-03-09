@@ -11,11 +11,11 @@ function ProjectDetailPage() {
     if (error) return <p>Error: {error.message}</p>
 
     return (
-        <div>
+        <>
             <p>{project?.name}</p>
             <TaskList projectId={Number(id)} />
             <CreateTask projectId={Number(id)} />
-        </div>
+        </>
     )
 }
 

@@ -1,3 +1,4 @@
+import "@cyntler/react-doc-viewer/dist/index.css"
 import { QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import { createRoot } from 'react-dom/client'

@@ -9,4 +9,6 @@ export default interface IProject {
     tasks: ITask[]
     mentor_id: number
     status: string
+    updated: string
+    created: string
 }

@@ -6,7 +6,9 @@ import { login } from './app/slices/authSlice'
 import ProtectedRoute from './components/route/ProtectedRoute'
 import Layout from './layouts/Layout'
 import CalendarPage from './pages/CalendarPage'
+import ChatPage from './pages/ChatPage'
 import CreateProjectPage from './pages/CreateProjectPage'
+import DocumentDetailPage from './pages/DocumentDetailPage'
 import DocumentPage from './pages/DocumentPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
@@ -18,6 +20,7 @@ import SettingPage from './pages/SettingPage'
 import TaskDetailPage from './pages/TaskDetailPage'
 import TeamPage from './pages/TeamPage'
 import UpdateProjectPage from './pages/UpdatetProjectPage'
+import ViewDocumentPage from './pages/ViewDocumentPage'
 
 function App() {
   const dispatch = useAppDispatch()
@@ -49,7 +52,10 @@ function App() {
             <Route path='/teams/:id' Component={TeamPage} />
 
             <Route path='/documents' Component={DocumentPage} />
-            <Route path='/documents/:id' Component={DocumentPage} />
+            <Route path='/documents/:id' Component={DocumentDetailPage} />
+            <Route path='/documents/:id/view' Component={ViewDocumentPage} />
+
+            <Route path='/chat' Component={ChatPage} />
 
             <Route path='/calendar' Component={CalendarPage} />
 

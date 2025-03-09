@@ -6,4 +6,6 @@ export interface ITeam {
     role: string
     image: string
     projects: number[]
+    updated: string
+    created: string
 }

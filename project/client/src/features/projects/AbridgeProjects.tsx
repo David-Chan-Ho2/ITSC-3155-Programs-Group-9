@@ -11,7 +11,6 @@ function AbridgeProjects() {
 
     return (
         <table className="text-left">
-            <caption>Projects</caption>
             <thead>
                 <tr>
                     <th>Name</th>

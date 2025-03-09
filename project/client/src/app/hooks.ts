@@ -3,17 +3,20 @@ import { useState } from 'react'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from "react-router-dom"
 import { loginUser, registerUser } from "../api/auth.api"
+import { getDocuments } from "../api/documents.api"
 import { getEvents } from "../api/events.api"
 import { createProject, deleteProject, getProject, getProjects, updateProject } from "../api/projects.api"
 import { createTask, deleteTask, getTask, getTasks, updateTask } from "../api/tasks.api"
 import { getTeams } from "../api/teams.api"
-import { getUserProjects } from '../api/users.api'
+import { getUserProjects, getUsers } from '../api/users.api'
 import { login } from "../app/slices/authSlice"
 import { IAuth, IToken } from "../types/auth.types"
+import { IDocument } from "../types/documents.types"
 import { IEvent } from "../types/events.types"
 import IProject from "../types/projects.types"
 import { ITask } from "../types/tasks.types"
 import { ITeam } from "../types/teams.types"
+import { IUser } from "../types/user.types"
 import type { AppDispatch, RootState } from './store'
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
@@ -124,7 +127,7 @@ export const useTask = (taskId: number) => {
 export const useCreateTask = () => {
     const queryClient = useQueryClient()
 
-    return useMutation<void, Error, Omit<ITask, 'id'>>({
+    return useMutation<void, Error, Partial<ITask>>({
         mutationFn: (newTask) => createTask(newTask),
         onSuccess: (_, createdTask) => {
             console.log('Create Task')
@@ -184,8 +187,16 @@ export const useTeams = () => {
 }
 
 // Users
+export const useUsers = () => {
+    return useQuery<IUser[], Error>({ queryKey: ['users'], queryFn: getUsers })
+}
 export const useUserProjects = (userId: number) => {
     return useQuery<IProject[], Error>({ queryKey: ['users', userId], queryFn: () => getUserProjects(userId) })
+}
+
+// Documents 
+export const useDocuments = () => {
+    return useQuery<IDocument[], Error>({ queryKey: ['documents'], queryFn: () => getDocuments() })
 }
 
 // Form

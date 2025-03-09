@@ -6,4 +6,6 @@ export interface IUser {
     role: string
     image: string
     projects: number[]
+    updated: string
+    created: string
 }

@@ -20,7 +20,7 @@ function CreateProjectPage() {
     }
 
     return (
-        <div>
+        <>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Input
                     label="Name"
@@ -44,7 +44,7 @@ function CreateProjectPage() {
                     Create
                 </Button>
             </Form>
-        </div>
+        </>
     )
 }
 
