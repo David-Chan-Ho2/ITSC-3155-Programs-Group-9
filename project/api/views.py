@@ -43,7 +43,7 @@ class EventViewSet(viewsets.ModelViewSet):
     serializer_class = EventSerializer
 
 # Project Views
-class ProjectViewSet(viewsets.ModelViewSet):
+class ProjectViewSet(viewsets.ModelViewSet):    
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
@@ -51,6 +51,10 @@ class ProjectViewSet(viewsets.ModelViewSet):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+
+    def get_queryset(self):
+        project_id = self.kwargs.get('project_pk')
+        return Task.objects.filter(project_id=project_id)
 
 # Room Views
 class RoomViewSet(viewsets.ModelViewSet):
