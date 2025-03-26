@@ -8,7 +8,7 @@ import {
     MenuItems,
     TransitionChild,
 } from '@headlessui/react'
-import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import {
     Bars3Icon,
     CalendarIcon,
@@ -219,17 +219,6 @@ function Layout() {
 
                     <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
                         <form action="#" method="GET" className="grid flex-1 grid-cols-1">
-                            <input
-                                name="search"
-                                type="search"
-                                placeholder="Search"
-                                aria-label="Search"
-                                className="col-start-1 row-start-1 block size-full bg-white pl-8 text-base text-gray-900 outline-none placeholder:text-gray-400 sm:text-sm/6"
-                            />
-                            <MagnifyingGlassIcon
-                                aria-hidden="true"
-                                className="pointer-events-none col-start-1 row-start-1 size-5 self-center text-gray-400"
-                            />
                         </form>
                         <div className="flex items-center gap-x-4 lg:gap-x-6">
                             <Notifications notifications={notifications} />

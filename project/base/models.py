@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from PIL import Image
+import io
 
 class User(AbstractUser):
     ROLE_CHOICES = [
@@ -23,6 +25,19 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.profile_picture:
+            img = Image.open(self.profile_picture.path)
+
+            # Resize logic
+            max_size = (16, 16)
+            if img.height > 16 or img.width > 16:
+                img.thumbnail(max_size)
+
+                img.save(self.profile_picture.path)
     
 
 class Room(models.Model):
