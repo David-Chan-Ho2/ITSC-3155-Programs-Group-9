@@ -12,16 +12,19 @@ import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import {
     Bars3Icon,
     CalendarIcon,
+    ChatBubbleLeftIcon,
     Cog6ToothIcon,
     DocumentDuplicateIcon,
     FolderIcon,
-    HomeIcon,
     UsersIcon,
     XMarkIcon
 } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
+import { useAppDispatch, useAppSelector, usePathname, useUser } from '../app/hooks'
+import { selectProject } from '../app/slices/projectSlice'
+import { selectUser } from '../app/slices/userSlice'
 import Button from '../components/buttons/Button'
 import Logo from '../components/logo/Logo'
 import Notifications from '../features/notifications/Notifications'
@@ -52,15 +55,19 @@ const notifications = [
     }
 ]
 
-
 function Layout() {
+    const { userId } = useAppSelector(selectUser)
+    const dispatch = useAppDispatch()
+    const { data: user, isLoading, error } = useUser(userId)
+    const pathname = usePathname()
+    const { projectId } = useAppSelector(selectProject)
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [navigation, setNavigation] = useState<ILink[]>([
-        { name: 'Home', href: '/', icon: HomeIcon, current: true },
-        { name: 'Team', href: '/teams', icon: UsersIcon, current: false },
-        { name: 'Projects', href: '/projects', icon: FolderIcon, current: false },
-        { name: 'Calendar', href: '/calendar', icon: CalendarIcon, current: false },
-        { name: 'Documents', href: '/documents', icon: DocumentDuplicateIcon, current: false },
+        { name: 'Project', href: `projects/${projectId}`, icon: FolderIcon, current: true },
+        { name: 'Chat', href: `projects/${projectId}/chat`, icon: ChatBubbleLeftIcon, current: false },
+        { name: 'Team', href: `projects/${projectId}/teams`, icon: UsersIcon, current: false },
+        { name: 'Calendar', href: `projects/${projectId}/calendar`, icon: CalendarIcon, current: false },
+        { name: 'Documents', href: `projects/${projectId}/documents`, icon: DocumentDuplicateIcon, current: false },
     ])
 
     const onLink = (href: string) => {
@@ -146,60 +153,61 @@ function Layout() {
                     </DialogPanel>
                 </div>
             </Dialog>
+            {pathname !== '/' &&
+                <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
 
-            <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-                {/* Sidebar component, swap this element with another sidebar if you like */}
-                <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
-                    <div className="flex h-16 shrink-0 items-center">
-                        <Logo />
-                    </div>
-                    <nav className="flex flex-1 flex-col">
-                        <ul role="list" className="flex flex-1 flex-col gap-y-7">
-                            <li>
-                                <ul role="list" className="-mx-2 space-y-1">
-                                    {navigation.map((item) => (
-                                        <li key={item.name}>
-                                            <Link
-                                                to={item.href}
-                                                className={clsx(
-                                                    item.current
-                                                        ? 'bg-gray-50 text-indigo-600'
-                                                        : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
-                                                    'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
-                                                )}
-                                                onClick={() => onLink(item.href)}
-                                            >
-                                                <item.icon
-                                                    aria-hidden="true"
+                    <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
+                        <div className="flex h-16 shrink-0 items-center">
+                            <Logo />
+                        </div>
+                        <nav className="flex flex-1 flex-col">
+                            <ul role="list" className="flex flex-1 flex-col gap-y-7">
+                                <li>
+                                    <ul role="list" className="-mx-2 space-y-1">
+                                        {navigation.map((item) => (
+                                            <li key={item.name}>
+                                                <Link
+                                                    to={item.href}
                                                     className={clsx(
-                                                        item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
-                                                        'size-6 shrink-0',
+                                                        item.current
+                                                            ? 'bg-gray-50 text-indigo-600'
+                                                            : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
+                                                        'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                                                     )}
-                                                />
-                                                {item.name}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </li>
-                            <li className="mt-auto">
-                                <a
-                                    href="/settings"
-                                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
-                                >
-                                    <Cog6ToothIcon
-                                        aria-hidden="true"
-                                        className="size-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
-                                    />
-                                    Settings
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                                                    onClick={() => onLink(item.href)}
+                                                >
+                                                    <item.icon
+                                                        aria-hidden="true"
+                                                        className={clsx(
+                                                            item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
+                                                            'size-6 shrink-0',
+                                                        )}
+                                                    />
+                                                    {item.name}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </li>
+                                <li className="mt-auto">
+                                    <a
+                                        href="/settings"
+                                        className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
+                                    >
+                                        <Cog6ToothIcon
+                                            aria-hidden="true"
+                                            className="size-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
+                                        />
+                                        Settings
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </div>
+            }
 
-            <div className="lg:pl-72">
+            <div className={pathname === '/' ? "" : "lg:pl-72"}>
                 <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
                     <Button type="button" onClick={() => setSidebarOpen(true)} className="-m-2.5 p-2.5 text-gray-700 lg:hidden">
                         <span className="sr-only">Open sidebar</span>
@@ -235,12 +243,12 @@ function Layout() {
                                     <span className="sr-only">Open user menu</span>
                                     <img
                                         alt=""
-                                        src="https://randomuser.me/api/portraits/women/10.jpg"
+                                        src={user?.profile_picture}
                                         className="size-8 rounded-full bg-gray-50"
                                     />
                                     <span className="hidden lg:flex lg:items-center">
                                         <span aria-hidden="true" className="ml-4 text-sm/6 font-semibold text-gray-900">
-                                        Alice Johnson
+                                            {user?.full_name}
                                         </span>
                                         <ChevronDownIcon aria-hidden="true" className="ml-2 size-5 text-gray-400" />
                                     </span>
@@ -265,10 +273,8 @@ function Layout() {
                     </div>
                 </div>
 
-                <main className="py-10">
-                    <div className="px-4 sm:px-6 lg:px-8">
-                        <Outlet />
-                    </div>
+                <main className="py-4 px-4 sm:px-6 lg:px-8">
+                    <Outlet />
                 </main>
             </div>
         </div>

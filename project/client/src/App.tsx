@@ -5,22 +5,22 @@ import { useAppDispatch } from './app/hooks'
 import { login } from './app/slices/authSlice'
 import ProtectedRoute from './components/route/ProtectedRoute'
 import Layout from './layouts/Layout'
-import CalendarPage from './pages/CalendarPage'
-import ChatPage from './pages/ChatPage'
-import CreateProjectPage from './pages/CreateProjectPage'
-import DocumentDetailPage from './pages/DocumentDetailPage'
-import DocumentPage from './pages/DocumentPage'
-import HomePage from './pages/HomePage'
-import LoginPage from './pages/LoginPage'
+import LoginPage from './pages/auth/LoginPage'
+import RegisterPage from './pages/auth/RegisterPage'
+import CalendarPage from './pages/calendar/CalendarPage'
+import ChatPage from './pages/chat/ChatPage'
+import DocumentDetailPage from './pages/documents/DocumentDetailPage'
+import DocumentPage from './pages/documents/DocumentPage'
+import ViewDocumentPage from './pages/documents/ViewDocumentPage'
 import NoMatchPage from './pages/NoMatchPage'
-import ProjectDetailPage from './pages/ProjectDetailPage'
-import ProjectPage from './pages/ProjectPage'
-import RegisterPage from './pages/RegisterPage'
-import SettingPage from './pages/SettingPage'
-import TaskDetailPage from './pages/TaskDetailPage'
-import TeamPage from './pages/TeamPage'
-import UpdateProjectPage from './pages/UpdatetProjectPage'
-import ViewDocumentPage from './pages/ViewDocumentPage'
+import CreateProjectPage from './pages/projects/CreateProjectPage'
+import EditProjectPage from './pages/projects/EdittProjectPage'
+import ProjectDetailPage from './pages/projects/ProjectDetailPage'
+import ProjectPage from './pages/projects/ProjectPage'
+import SettingPage from './pages/users/SettingPage'
+import TaskDetailPage from './pages/tasks/TaskDetailPage'
+import TeamPage from './pages/teams/TeamPage'
+import UserDetailPage from './pages/users/UserDetailPage'
 
 function App() {
   const dispatch = useAppDispatch()
@@ -37,27 +37,40 @@ function App() {
       <Routes>
         <Route element={<ProtectedRoute />}>
           <Route Component={Layout}>
-            <Route path='/' Component={HomePage} />
+            <Route path='/' Component={ProjectPage} />
 
-            <Route path='/projects' Component={ProjectPage} />
-            <Route path='/projects/create' Component={CreateProjectPage} />
-            <Route path='/projects/teams' Component={ProjectPage} />
-            <Route path='/projects/documents' Component={ProjectPage} />
-            <Route path='/projects/:id' Component={ProjectDetailPage} />
-            <Route path='/projects/:id/update' Component={UpdateProjectPage} />
+            <Route path='projects/'>
+              <Route path='create' Component={CreateProjectPage} />
+              <Route path='teams' Component={ProjectPage} />
+              <Route path='documents' Component={ProjectPage} />
 
-            <Route path='/tasks/:id' Component={TaskDetailPage} />
+              <Route path=":id/">
+                <Route Component={ProjectDetailPage} />
+                <Route path='edit' Component={EditProjectPage} />
 
-            <Route path='/teams' Component={TeamPage} />
-            <Route path='/teams/:id' Component={TeamPage} />
+                <Route path='tasks/:id' Component={TaskDetailPage} />
 
-            <Route path='/documents' Component={DocumentPage} />
-            <Route path='/documents/:id' Component={DocumentDetailPage} />
-            <Route path='/documents/:id/view' Component={ViewDocumentPage} />
+                <Route path='teams' Component={TeamPage} />
 
-            <Route path='/chat' Component={ChatPage} />
+                <Route path='documents/'>
+                  <Route Component={DocumentPage} />
 
-            <Route path='/calendar' Component={CalendarPage} />
+                  <Route path=':id/'>
+                    <Route Component={DocumentDetailPage} />
+                    <Route path='view' Component={ViewDocumentPage} />
+                  </Route>
+
+                </Route>
+
+
+                <Route path='chat' Component={ChatPage} />
+
+                <Route path='calendar' Component={CalendarPage} />
+              </Route>
+
+            </Route>
+
+            <Route path='/users/:id' Component={UserDetailPage} />
 
             <Route path='/settings' Component={SettingPage} />
 

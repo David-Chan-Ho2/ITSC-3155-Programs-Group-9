@@ -4,11 +4,22 @@ from django.contrib.auth.password_validation import validate_password
 from base.models import Document, Room, Message, User, Event, Project, Task
 
 class UserSerializer(serializers.ModelSerializer):
+    profile_picture_url = serializers.SerializerMethodField()
+    full_name = serializers.SerializerMethodField()
     
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'last_name', 'password', 'email', 'date_joined']
+        fields = '__all__'
         
+    def get_profile_picture_url(self, obj):
+        request = self.context.get('request')
+        if obj.profile_picture:
+            return request.build_absolute_uri(obj.profile_picture.url)
+        return request.build_absolute_uri('/media/profile_pics/default_avatar.png')
+    
+    def get_full_name(self, obj):
+        return f"{obj.first_name} {obj.last_name}".strip()
+
 
 class RegisterSerializer(serializers.ModelSerializer):
     

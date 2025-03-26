@@ -1,9 +1,12 @@
-import { useAppSelector, useUserProjects } from "../../app/hooks"
-import { selectUser } from "../../app/slices/userSlice"
+import { useUserProjects } from "../../app/hooks"
+import Link from "../../components/links/Link"
 import IProject from "../../types/projects.types"
 
-function AbridgeProjects() {
-    const { userId } = useAppSelector(selectUser)
+interface IAbridgeProjects {
+    userId: number
+}
+
+function AbridgeProjects({ userId }: IAbridgeProjects) {
     const { data, isLoading, error } = useUserProjects(userId)
 
     if (isLoading) return <p>Loading...</p>
@@ -20,7 +23,7 @@ function AbridgeProjects() {
                 {data?.map((project: IProject) => (
                     <tr key={project.id}>
                         <td>
-                            <a href={`/projects/${project.id}`}>{project.name}</a>
+                            <Link to={`/projects/${project.id}`}>{project.name}</Link>
                         </td>
                     </tr>
                 ))}

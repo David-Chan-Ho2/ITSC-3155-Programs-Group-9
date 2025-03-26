@@ -5,14 +5,16 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { loginUser, registerUser } from "../api/auth.api"
 import { getDocuments } from "../api/documents.api"
 import { getEvents } from "../api/events.api"
+import { createMessage, getMessages } from "../api/messages.api"
 import { createProject, deleteProject, getProject, getProjects, updateProject } from "../api/projects.api"
 import { createTask, deleteTask, getTask, getTasks, updateTask } from "../api/tasks.api"
 import { getTeams } from "../api/teams.api"
-import { getUserProjects, getUsers } from '../api/users.api'
+import { getUser, getUserProjects, getUsers } from '../api/users.api'
 import { login } from "../app/slices/authSlice"
 import { IAuth, IToken } from "../types/auth.types"
 import { IDocument } from "../types/documents.types"
 import { IEvent } from "../types/events.types"
+import { IMessage } from "../types/messages.types"
 import IProject from "../types/projects.types"
 import { ITask } from "../types/tasks.types"
 import { ITeam } from "../types/teams.types"
@@ -55,6 +57,7 @@ const useRegister = () => {
 }
 
 export const useAuth = () => {
+
     const register = useRegister()
     const login = useLogin()
 
@@ -63,10 +66,12 @@ export const useAuth = () => {
 
 // Project
 export const useCreateProject = () => {
+    const navigate = useNavigate()
+
     return useMutation<void, Error, Omit<IProject, 'id'>>({
         mutationFn: (data) => createProject(data),
         onSuccess: (data) => {
-            console.log('Create Project')
+            navigate(-1)
         },
         onError: (error: any) => {
             console.log(`Login failed: ${error.response?.data?.message || error.message}`)
@@ -83,6 +88,7 @@ export const useProjects = () => {
 }
 
 export const useUpdateProject = () => {
+    const navigate = useNavigate()
     const queryClient = useQueryClient()
 
     return useMutation({
@@ -92,6 +98,7 @@ export const useUpdateProject = () => {
                 return oldProjects?.map((t) => (t.id === project.id ? { ...t, ...project } : t)) || []
             })
             queryClient.invalidateQueries({ queryKey: ["projects", project.id] })
+            navigate(-1)
         },
     })
 }
@@ -100,12 +107,12 @@ export const useDeleteProject = () => {
     const queryClient = useQueryClient()
 
     return useMutation<void, Error, number>({
-        mutationFn: (projectId) => deleteProject(projectId),
-        onSuccess: (_, projectId) => {
+        mutationFn: (id) => deleteProject(id),
+        onSuccess: (_, id) => {
             console.log('Delete Project')
             queryClient.setQueryData(["projects"], (oldProjects: IProject[] | undefined) => {
                 if (!oldProjects) return []
-                return oldProjects.filter((project) => project.id !== projectId)
+                return oldProjects.filter((project) => project.id !== id)
             })
             queryClient.invalidateQueries({ queryKey: ["projects"] })
         },
@@ -116,8 +123,8 @@ export const useDeleteProject = () => {
 }
 
 // Task
-export const useTasks = (projectId: number) => {
-    return useQuery<ITask[], Error>({ queryKey: ['tasks', projectId], queryFn: () => getTasks(projectId) })
+export const useTasks = (id: number) => {
+    return useQuery<ITask[], Error>({ queryKey: ['tasks', id], queryFn: () => getTasks(id) })
 }
 
 export const useTask = (taskId: number) => {
@@ -131,11 +138,11 @@ export const useCreateTask = () => {
         mutationFn: (newTask) => createTask(newTask),
         onSuccess: (_, createdTask) => {
             console.log('Create Task')
-            queryClient.setQueryData(["tasks", createdTask.projectId], (oldTasks: ITask[] | undefined) => {
+            queryClient.setQueryData(["tasks", createdTask.project], (oldTasks: ITask[] | undefined) => {
                 return oldTasks ? [...oldTasks, createdTask] : [createdTask]
             })
 
-            queryClient.invalidateQueries({ queryKey: ["tasks", createdTask.projectId] })
+            queryClient.invalidateQueries({ queryKey: ["tasks", createdTask.project] })
         },
         onError: (error: any) => {
             console.log(`Login failed: ${error.response?.data?.message || error.message}`)
@@ -152,7 +159,7 @@ export const useUpdateTask = () => {
             queryClient.setQueryData(["tasks"], (oldTasks: ITask[] | undefined) => {
                 return oldTasks?.map((t) => (t.id === task.id ? { ...t, ...task } : t)) || []
             })
-            queryClient.invalidateQueries({ queryKey: ["tasks", task.projectId] })
+            queryClient.invalidateQueries({ queryKey: ["tasks", task.id] })
         },
     })
 }
@@ -190,25 +197,53 @@ export const useTeams = () => {
 export const useUsers = () => {
     return useQuery<IUser[], Error>({ queryKey: ['users'], queryFn: getUsers })
 }
+
+export const useUser = (userId: number) => {
+    return useQuery<IUser, Error>({ queryKey: ['user', userId], queryFn: () => getUser(userId) })
+}
+
 export const useUserProjects = (userId: number) => {
     return useQuery<IProject[], Error>({ queryKey: ['users', userId], queryFn: () => getUserProjects(userId) })
 }
 
 // Documents 
 export const useDocuments = () => {
-    return useQuery<IDocument[], Error>({ queryKey: ['documents'], queryFn: () => getDocuments() })
+    return useQuery<IDocument[], Error>({ queryKey: ['documents'], queryFn: getDocuments })
+}
+
+// Messages 
+export const useMessages = () => {
+    return useQuery<IMessage[], Error>({ queryKey: ['messages'], queryFn: getMessages })
+}
+
+export const useCreateMessage = () => {
+    const queryClient = useQueryClient()
+    return useMutation<void, Error, Partial<IMessage>>({
+        mutationFn: (newMessage) => createMessage(newMessage),
+        onSuccess: (_, createdMessage) => {
+            console.log('Create Message')
+            queryClient.setQueryData(["messages", createdMessage.id], (oldMessages: IMessage[] | undefined) => {
+                return oldMessages ? [...oldMessages, createdMessage] : [createdMessage]
+            })
+
+            queryClient.invalidateQueries({ queryKey: ["messages", createdMessage.id] })
+        },
+        onError: (error: any) => {
+            console.log(`Login failed: ${error.response?.data?.message || error.message}`)
+        }
+    })
 }
 
 // Form
-export const useForm = <T extends Record<string, any>>(initialState: T) => {
-    const [form, setForm] = useState<T>(initialState)
+export const useForm = <T extends Record<string, any>>(initialState: Partial<T>) => {
+    const [form, setForm] = useState<Partial<T>>(initialState)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
         setForm((prev) => ({ ...prev, [name]: value }))
     }
 
-    const handleSubmit = (onSubmit: (form: T) => void) => (e: React.FormEvent) => {
+    const handleSubmit = (onSubmit: (form: Partial<T>) => void) => (e: React.FormEvent) => {
         e.preventDefault()
         onSubmit(form)
         resetForm()

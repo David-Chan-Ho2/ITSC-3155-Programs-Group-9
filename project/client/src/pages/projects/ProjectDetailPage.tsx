@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
-import { useProject } from "../app/hooks"
-import CreateTask from "../features/tasks/CreateTask"
-import TaskList from "../features/tasks/TaskList"
+import { useProject } from "../../app/hooks"
+import CreateTask from "../../features/tasks/CreateTask"
+import TaskList from "../../features/tasks/TaskList"
 
 function ProjectDetailPage() {
     const { id } = useParams<{ id: string }>()

@@ -1,6 +1,13 @@
+import {
+    ClipboardIcon
+} from '@heroicons/react/24/outline'
+import { NavLink } from 'react-router-dom'
+
 function Logo() {
     return (
-        <img src="logo.svg" className="h-8 w-auto" />
+        <NavLink to="/">
+            <ClipboardIcon className="h-8 w-auto" />
+        </NavLink>
     )
 }
 

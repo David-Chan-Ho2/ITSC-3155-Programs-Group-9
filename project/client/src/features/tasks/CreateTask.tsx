@@ -15,8 +15,8 @@ function CreateTask({ projectId }: ICreateTask) {
     const createTask = useCreateTask()
 
     const { form, handleChange, handleSubmit } = useForm<Partial<ITask>>({
-        userId,
-        projectId,
+        user: userId,
+        project: projectId,
         title: '',
         completed: false,
     })

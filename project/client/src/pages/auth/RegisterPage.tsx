@@ -1,14 +1,12 @@
-import { useNavigate } from "react-router-dom"
-import { useAuth, useForm } from "../app/hooks"
-import Button from "../components/buttons/Button"
-import Form from "../components/forms/Form"
-import Input from "../components/inputs/Input"
-import AuthLayout from "../layouts/AuthLayout"
-import { IRegister } from "../types/auth.types"
+import { useAuth, useForm } from "../../app/hooks"
+import Button from "../../components/buttons/Button"
+import Form from "../../components/forms/Form"
+import Input from "../../components/inputs/Input"
+import AuthLayout from "../../layouts/AuthLayout"
+import { IRegister } from "../../types/auth.types"
 
 function RegisterPage() {
     const initForm = { email: '', password: '', password2: '' }
-    const navigate = useNavigate()
 
     const { form, handleChange, handleSubmit } = useForm(initForm)
 
@@ -16,7 +14,6 @@ function RegisterPage() {
 
     const onSubmit = (formData: IRegister) => {
         register.mutate(formData)
-        navigate("/")
     }
 
     return (

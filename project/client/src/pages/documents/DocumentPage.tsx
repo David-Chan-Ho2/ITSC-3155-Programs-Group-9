@@ -1,8 +1,8 @@
 
 import { NavLink } from "react-router-dom"
-import { useDocuments } from "../app/hooks"
-import Button from "../components/buttons/Button"
-import { IDocument } from "../types/documents.types"
+import { useDocuments } from "../../app/hooks"
+import Button from "../../components/buttons/Button"
+import { IDocument } from "../../types/documents.types"
 
 function DocumentPage() {
   const { data, isLoading, error } = useDocuments()

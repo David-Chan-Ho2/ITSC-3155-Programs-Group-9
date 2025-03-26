@@ -1,6 +1,6 @@
 export interface ITask {
-    userId: number
-    projectId: number
+    user: number
+    project: number
     id: number
     title: string
     description?: string

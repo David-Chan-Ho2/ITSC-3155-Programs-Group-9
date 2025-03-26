@@ -1,10 +1,10 @@
 import { Button } from "@headlessui/react"
 import { NavLink, useNavigate, useParams } from "react-router-dom"
-import { useForm, useProject, useUpdateProject } from "../app/hooks"
-import Form from "../components/forms/Form"
-import Input from "../components/inputs/Input"
+import { useForm, useProject, useUpdateProject } from "../../app/hooks"
+import Form from "../../components/forms/Form"
+import Input from "../../components/inputs/Input"
 
-function UpdateProjectPage() {
+function EditProjectPage() {
     const params = useParams()
     const { data, isLoading, error } = useProject(Number(params.id))
     const { form, handleChange, handleSubmit } = useForm({
@@ -24,12 +24,11 @@ function UpdateProjectPage() {
 
     const onSubmit = () => {
         updateProjectMutation.mutate({ ...data, ...form })
-        navigate('/projects')
     }
 
     return (
         <>
-            <NavLink to="/projects">Go back</NavLink>
+            <NavLink to='#' onClick={() => navigate(-1)}>Go back</NavLink>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Input
                     defaultValue={data?.name}
@@ -41,11 +40,11 @@ function UpdateProjectPage() {
                     onChange={handleChange}
                     name="description"
                 />
-                
+
                 <Button type="submit">Submit</Button>
             </Form>
         </>
     )
 }
 
-export default UpdateProjectPage
+export default EditProjectPage

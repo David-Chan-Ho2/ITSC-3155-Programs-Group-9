@@ -12,7 +12,7 @@ function NoMatchPage() {
             </p>
             <div className="mt-10">
                 <Link to="/" className="text-sm/7 font-semibold text-indigo-600">
-                    <span aria-hidden="true">&larr;</span> Back to home
+                    Back to home
                 </Link>
             </div>
         </>

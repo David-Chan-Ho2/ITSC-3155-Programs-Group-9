@@ -10,6 +10,11 @@ export async function getUsers(): Promise<IUser[]> {
     return data
 }
 
+export async function getUser(userId: number): Promise<IUser> {
+    const { data } = await axios.get(url + userId)
+    return data
+}
+
 export async function getUserProjects(userId: number): Promise<IProject[]> {
     const { data } = await axios.get(url + userId)
     const projects = data['projects']

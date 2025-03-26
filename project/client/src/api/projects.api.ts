@@ -10,7 +10,7 @@ export async function getProjects(): Promise<IProject[]> {
 }
 
 export async function getProject(id: number): Promise<IProject> {
-    const { data } = await axios.get(url + id)
+    const { data } = await axios.get(`${url}${id}/`)
     return data
 }
 
@@ -20,12 +20,12 @@ export async function createProject(project: Partial<IProject>): Promise<void> {
 }
 
 export async function updateProject(project: IProject): Promise<IProject> {
-    const { data } = await axios.put(url + project.id, project)
+    const { data } = await axios.put(`${url}${project.id}/`, project)
     return data
 }
 
 export async function deleteProject(id: number): Promise<void> {
-    const { data } = await axios.delete(url + id)
+    const { data } = await axios.delete(`${url}${id}/`)
     return data
 }
 

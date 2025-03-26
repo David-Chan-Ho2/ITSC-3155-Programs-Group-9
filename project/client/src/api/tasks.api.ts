@@ -5,7 +5,7 @@ import { BASE_URL } from './base.api'
 const url = BASE_URL + 'tasks/'
 
 export async function getTasks(projectId: number): Promise<ITask[]> {
-    const { data } = await axios.get(url + "?projectId=" + projectId)
+    const { data } = await axios.get(`${url}/${projectId}/tasks`)
     return data
 }
 

@@ -1,6 +1,6 @@
-import Button from '../components/buttons/Button'
-import Form from '../components/forms/Form'
-import Input from '../components/inputs/Input'
+import Button from '../../components/buttons/Button'
+import Form from '../../components/forms/Form'
+import Input from '../../components/inputs/Input'
 
 function SettingPage() {
     return (

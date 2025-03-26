@@ -1,5 +1,5 @@
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer"
-import { useDocuments } from "../app/hooks"
+import { useDocuments } from "../../app/hooks"
 
 function ViewDocumentPage() {
     const { data } = useDocuments()

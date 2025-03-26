@@ -12,6 +12,8 @@ class User(AbstractUser):
     first_name = models.TextField(max_length=16)
     last_name = models.TextField(max_length=16)
     email = models.EmailField(unique=True)
+    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True,default='profile_pics/default_avatar.png')
+    
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='viewer')
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -109,7 +111,6 @@ class Project(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    department = models.CharField(max_length=100)
     manager = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='planned')
     updated = models.DateTimeField(auto_now=True)
@@ -124,7 +125,8 @@ class Project(models.Model):
 
 class Task(models.Model):
     id = models.AutoField(primary_key=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, related_name='tasks', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     completed = models.BooleanField(default=False)
@@ -146,7 +148,7 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Comment by {self.user.first_name} {self.user.last_name} on {self.task.title}"
+        return f"Comment by {self.user.full_name} on {self.task.title}"
 
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -155,4 +157,4 @@ class Notification(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Notification for {self.user.first_name} {self.user.last_name}"
+        return f"Notification for {self.user.full_name}"

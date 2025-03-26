@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
-import { useAuth, useForm } from "../app/hooks"
-import Button from "../components/buttons/Button"
-import Form from "../components/forms/Form"
-import Input from "../components/inputs/Input"
-import AuthLayout from "../layouts/AuthLayout"
-import { IAuth } from "../types/auth.types"
+import { useAuth, useForm } from "../../app/hooks"
+import Button from "../../components/buttons/Button"
+import Form from "../../components/forms/Form"
+import Input from "../../components/inputs/Input"
+import AuthLayout from "../../layouts/AuthLayout"
+import { IAuth } from "../../types/auth.types"
 
 function LoginPage() {
     const initForm = { email: '', password: '' }

@@ -1,17 +1,24 @@
 import { NavLink } from "react-router-dom"
-import { useDeleteProject, useProjects } from "../app/hooks"
-import Button from "../components/buttons/Button"
-import IProject from "../types/projects.types"
+import { useAppDispatch, useDeleteProject, useProjects } from "../../app/hooks"
+import { setProjectId } from "../../app/slices/projectSlice"
+import Button from "../../components/buttons/Button"
+import Link from "../../components/links/Link"
+import IProject from "../../types/projects.types"
 
 function ProjectPage() {
     const { data, isLoading, error } = useProjects()
     const deleteProjectMutation = useDeleteProject()
+    const dispatch = useAppDispatch()
 
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>
 
     const onDelete = (id: number) => {
         deleteProjectMutation.mutate(id)
+    }
+
+    const onLink = (id: number) => {
+        dispatch(setProjectId(id))
     }
 
     return (
@@ -33,14 +40,14 @@ function ProjectPage() {
                     {data?.map((project: IProject) => (
                         <tr key={project.id}>
                             <td>
-                                <a href={`/projects/${project.id}`}>{project.name}</a>
+                                <Link to={`/projects/${project.id}`} onClick={() => onLink(project.id)}>{project.name}</Link>
                             </td>
                             <td>
                                 {project.description}
                             </td>
                             <td className="px-3">
                                 <Button>
-                                    <NavLink to={`/projects/${project.id}/update`}>
+                                    <NavLink to={`/projects/${project.id}/edit`}>
                                         Edit
                                     </NavLink>
                                 </Button>
