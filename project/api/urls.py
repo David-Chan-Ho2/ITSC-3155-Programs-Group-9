@@ -4,26 +4,19 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from rest_framework.routers import DefaultRouter
 
-urlpatterns = [
-    path('users/', views.UserListCreateView.as_view(), name='user-list-create'),
-    path('users/<int:pk>/', views.UserRetrieveUpdateDestroyView.as_view(), name='user-detail'),
-    
+
+router = DefaultRouter()
+router.register(r'projects', views.ProjectViewSet)
+router.register(r'rooms', views.RoomViewSet)
+router.register(r'documents', views.DocumentViewSet)
+router.register(r'events', views.EventViewSet)
+router.register(r'tasks', views.TaskViewSet)
+router.register(r'users', views.UserViewSet)
+# router.register(r'register', views.RegisterUserViewSet)
+
+urlpatterns = router.urls +  [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    
-    path('register/', views.RegisterUserAPIView.as_view(), name='register'),
-    path('protected/', views.ProtectedView.as_view(), name='protected'),
-    
-    path('documents/', views.DocumentListCreateView.as_view(), name='document-list-create'),
-    path('documents/<int:pk>/', views.DocumentDetailView.as_view(), name='document-detail'),
-
-    path('events/', views.EventListCreateView.as_view(), name='event-list-create'),
-    path('events/<int:pk>/', views.EventDetailView.as_view(), name='event-detail'),
-
-    path('projects/', views.ProjectListCreateView.as_view(), name='project-list-create'),
-    path('projects/<int:pk>/', views.ProjectDetailView.as_view(), name='project-detail'),
-
-    path('tasks/', views.TaskListCreateView.as_view(), name='task-list-create'),
-    path('tasks/<int:pk>/', views.TaskDetailView.as_view(), name='task-detail'),
 ]
