@@ -1,15 +1,11 @@
-import { useTasks } from "../../app/hooks"
+import { ITask } from "../../types/tasks.types"
 import TaskItem from "./TaskItem"
 
 interface ITaskList {
-    projectId: number
+    tasks: ITask[]
 }
 
-function TaskList({ projectId }: ITaskList) {
-    const { data: tasks, isLoading } = useTasks(projectId)
-
-    if (isLoading) return <p>Loading tasks...</p>
-
+function TaskList({ tasks }: ITaskList) {
     return (
         <ul>
             {tasks.map(task => (

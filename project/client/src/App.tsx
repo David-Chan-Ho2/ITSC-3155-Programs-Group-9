@@ -17,9 +17,9 @@ import CreateProjectPage from './pages/projects/CreateProjectPage'
 import EditProjectPage from './pages/projects/EdittProjectPage'
 import ProjectDetailPage from './pages/projects/ProjectDetailPage'
 import ProjectPage from './pages/projects/ProjectPage'
-import SettingPage from './pages/users/SettingPage'
 import TaskDetailPage from './pages/tasks/TaskDetailPage'
 import TeamPage from './pages/teams/TeamPage'
+import SettingPage from './pages/users/SettingPage'
 import UserDetailPage from './pages/users/UserDetailPage'
 
 function App() {
@@ -43,12 +43,13 @@ function App() {
               <Route path='create' Component={CreateProjectPage} />
               <Route path='teams' Component={ProjectPage} />
               <Route path='documents' Component={ProjectPage} />
+              
+              <Route path=':projectId/tasks/:id' Component={TaskDetailPage} />
 
               <Route path=":id/">
-                <Route Component={ProjectDetailPage} />
+                <Route path="" Component={ProjectDetailPage} />
                 <Route path='edit' Component={EditProjectPage} />
 
-                <Route path='tasks/:id' Component={TaskDetailPage} />
 
                 <Route path='teams' Component={TeamPage} />
 
@@ -56,7 +57,7 @@ function App() {
                   <Route Component={DocumentPage} />
 
                   <Route path=':id/'>
-                    <Route Component={DocumentDetailPage} />
+                    <Route path="" Component={DocumentDetailPage} />
                     <Route path='view' Component={ViewDocumentPage} />
                   </Route>
 

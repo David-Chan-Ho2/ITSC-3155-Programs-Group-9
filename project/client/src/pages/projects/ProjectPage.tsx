@@ -54,6 +54,9 @@ function ProjectPage() {
                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                             Mentor
                         </th>
+                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                            Status
+                        </th>
                         <th className="px-3"></th>
                         <th></th>
                     </tr>
@@ -69,6 +72,9 @@ function ProjectPage() {
                             </td>
                             <td>
                                 {project.mentor}
+                            </td>
+                            <td>
+                                {project.status}
                             </td>
                             <td className="px-3">
                                 <Button>

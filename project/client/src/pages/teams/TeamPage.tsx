@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom"
 import { useUsers } from "../../app/hooks"
 
 export default function TeamPage() {
@@ -30,7 +31,7 @@ export default function TeamPage() {
                                     <img alt="" src={user.profile_picture} className="size-11 rounded-full" />
                                 </div>
                                 <div className="ml-4">
-                                    <div className="font-medium text-gray-900">{user.full_name}</div>
+                                    <NavLink className="font-medium text-gray-900" to={`/users/${user.id}`}>{user.full_name}</NavLink>
                                     <div className="mt-1 text-gray-500">{user.email}</div>
                                 </div>
                             </div>

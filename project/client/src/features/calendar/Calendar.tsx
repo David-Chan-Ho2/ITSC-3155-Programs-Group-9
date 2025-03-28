@@ -4,7 +4,6 @@ import multiMonthPlugin from '@fullcalendar/multimonth'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { Button, Input } from '@headlessui/react'
-import { useState } from 'react'
 import { useEvents, useForm } from '../../app/hooks'
 import Form from '../../components/forms/Form'
 
@@ -20,7 +19,6 @@ const Calendar = () => {
         color: "#ff9f89",
         backgroundColor: "#e3b6f1"
     })
-    const [open, setOpen] = useState<boolean>(false)
 
     const handleDateSelect = (selectInfo: any) => {
         let title = prompt('Enter event title:')
@@ -58,24 +56,22 @@ const Calendar = () => {
 
     return (
         <>
-            {open &&
-                <Form>
-                    <Input
-                        type="text"
-                        name="title"
-                        value={form.title}
-                        onChange={handleChange}
-                    />
-                    <Input
-                        type="text"
-                        name="description"
-                        value={form.description}
-                        onChange={handleChange}
-                    />
+            <Form>
+                <Input
+                    type="text"
+                    name="title"
+                    value={form.title}
+                    onChange={handleChange}
+                />
+                <Input
+                    type="text"
+                    name="description"
+                    value={form.description}
+                    onChange={handleChange}
+                />
 
-                    <Button type="submit">Submit</Button>
-                </Form>
-            }
+                <Button type="submit">Submit</Button>
+            </Form>
 
             {data &&
                 <FullCalendar

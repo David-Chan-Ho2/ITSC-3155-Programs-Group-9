@@ -24,6 +24,7 @@ function TaskDetailPage() {
     }
 
     if (error) {
+        console.log(params.id)
         return <p>Error: {error.message}</p>
     }
 

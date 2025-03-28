@@ -200,15 +200,6 @@
       "size": 340
     }
   ],
-  "notifications": [
-    {
-      "id": 1,
-      "user": 3,
-      "message": "You have been assigned a new task: Create Homepage Mockup",
-      "is_read": false,
-      "created": "2024-02-10T09:00:00Z"
-    }
-  ],
   "rooms": [
     {
       "id": 1,

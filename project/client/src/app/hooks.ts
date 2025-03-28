@@ -7,7 +7,7 @@ import { getDocuments } from "../api/documents.api"
 import { getEvents } from "../api/events.api"
 import { createMessage, getMessages } from "../api/messages.api"
 import { createProject, deleteProject, getProject, getProjects, updateProject } from "../api/projects.api"
-import { createTask, deleteTask, getTask, getTasks, updateTask } from "../api/tasks.api"
+import { createTask, deleteTask, getTask, updateTask } from "../api/tasks.api"
 import { getTeams } from "../api/teams.api"
 import { getUser, getUserProjects, getUsers } from '../api/users.api'
 import { login } from "../app/slices/authSlice"
@@ -123,10 +123,6 @@ export const useDeleteProject = () => {
 }
 
 // Task
-export const useTasks = (id: number) => {
-    return useQuery<ITask[], Error>({ queryKey: ['tasks', id], queryFn: () => getTasks(id) })
-}
-
 export const useTask = (taskId: number) => {
     return useQuery<ITask, Error>({ queryKey: ['task', taskId], queryFn: () => getTask(taskId) })
 }
@@ -137,12 +133,10 @@ export const useCreateTask = () => {
     return useMutation<void, Error, Partial<ITask>>({
         mutationFn: (newTask) => createTask(newTask),
         onSuccess: (_, createdTask) => {
-            console.log('Create Task')
             queryClient.setQueryData(["tasks", createdTask.project], (oldTasks: ITask[] | undefined) => {
                 return oldTasks ? [...oldTasks, createdTask] : [createdTask]
             })
-
-            queryClient.invalidateQueries({ queryKey: ["tasks", createdTask.project] })
+            queryClient.invalidateQueries({ queryKey: ["project", createdTask.project] })
         },
         onError: (error: any) => {
             console.log(`Login failed: ${error.response?.data?.message || error.message}`)
@@ -167,19 +161,18 @@ export const useUpdateTask = () => {
 export const useDeleteTask = () => {
     const queryClient = useQueryClient()
 
-    return useMutation<void, Error, number>({
-        mutationFn: (taskId) => deleteTask(taskId),
-        onSuccess: (_, taskId) => {
-            console.log('Delete Task')
-            queryClient.setQueryData(["tasks"], (oldTasks: ITask[] | undefined) => {
-                if (!oldTasks) return []
-                return oldTasks.filter((task) => task.id !== taskId)
-            })
-            queryClient.invalidateQueries({ queryKey: ["tasks"] })
+    return useMutation<void, Error, ITask>({
+        mutationFn: (task) => deleteTask(task.id),
+        onSuccess: (__, deletedTask) => {
+            queryClient.setQueryData<ITask[]>(["tasks"], (oldTasks = []) =>
+                oldTasks.filter((task) => task.id !== deletedTask.id)
+            )
+
+            queryClient.invalidateQueries({ queryKey: ["project", deletedTask.project] })
         },
         onError: (error: any) => {
             console.log(`Task delete failed: ${error.response?.data?.message || error.message}`)
-        }
+        },
     })
 }
 

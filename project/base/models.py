@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from PIL import Image
-import io
 
 class User(AbstractUser):
     ROLE_CHOICES = [
@@ -15,7 +14,6 @@ class User(AbstractUser):
     last_name = models.TextField(max_length=16)
     email = models.EmailField(unique=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True,default='profile_pics/default_avatar.png')
-    
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='viewer')
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -154,22 +152,3 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
-
-class Comment(models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.TextField()
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Comment by {self.user.full_name} on {self.task.title}"
-
-class Notification(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.TextField()
-    is_read = models.BooleanField(default=False)
-    created = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Notification for {self.user.full_name}"

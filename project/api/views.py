@@ -1,12 +1,12 @@
-from rest_framework import generics, filters
+from rest_framework import filters
 from base.models import User, Document, Event, Project, Task, Room
 from .serializers import DocumentSerializer, EventSerializer, ProjectSerializer, RegisterSerializer, TaskSerializer, UserSerializer, RoomSerializer
-from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from base.permissions import IsAdminRole
 from rest_framework import viewsets
+from django_filters.rest_framework import DjangoFilterBackend
 
 class ProtectedView(APIView):
     permission_classes = [IsAuthenticated]
@@ -51,10 +51,8 @@ class ProjectViewSet(viewsets.ModelViewSet):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-
-    def get_queryset(self):
-        project_id = self.kwargs.get('project_pk')
-        return Task.objects.filter(project_id=project_id)
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['project']
 
 # Room Views
 class RoomViewSet(viewsets.ModelViewSet):

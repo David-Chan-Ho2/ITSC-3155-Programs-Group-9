@@ -44,17 +44,6 @@ const userNavigation = [
     { name: 'Sign out', href: '#' },
 ]
 
-const notifications = [
-    {
-        id: 1,
-        user: 3,
-        message: "You have been assigned a new task: Create Homepage Mockup",
-        is_read: false,
-        href: "",
-        created: "2024-02-10T09:00:00Z"
-    }
-]
-
 function Layout() {
     const { userId } = useAppSelector(selectUser)
     const dispatch = useAppDispatch()
@@ -221,7 +210,7 @@ function Layout() {
                         <form action="#" method="GET" className="grid flex-1 grid-cols-1">
                         </form>
                         <div className="flex items-center gap-x-4 lg:gap-x-6">
-                            <Notifications notifications={notifications} />
+                            <Notifications />
 
                             {/* Separator */}
                             <div aria-hidden="true" className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-200" />

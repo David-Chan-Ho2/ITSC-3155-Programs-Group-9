@@ -13,7 +13,7 @@ function ProjectDetailPage() {
     return (
         <>
             <p>{project?.name}</p>
-            <TaskList projectId={Number(id)} />
+            <TaskList tasks={project?.tasks} />
             <CreateTask projectId={Number(id)} />
         </>
     )

@@ -17,13 +17,13 @@ function TaskItem({ task }: ITaskItem) {
   }
 
   const onDeleteTask = () => {
-    deleteTaskMutation.mutate(task.id)
+    deleteTaskMutation.mutate(task)
   }
 
   return (
     <div className="flex gap-5">
       <input type="checkbox" checked={task.completed} onChange={onCompleteTask} />
-      <Link className={clsx(task.completed ? 'line-through' : '')} to={`/tasks/${task.id}`}>{task.title}</Link>
+      <Link className={clsx(task.completed ? 'line-through' : '')} to={`tasks/${task.id}`}>{task.title}</Link>
       <Button onClick={onDeleteTask}>
         x
       </Button>

@@ -1,7 +1,7 @@
 export interface ITask {
+    id: number
     user: number
     project: number
-    id: number
     title: string
     description?: string
     completed: boolean
