@@ -43,13 +43,12 @@ function App() {
               <Route path='create' Component={CreateProjectPage} />
               <Route path='teams' Component={ProjectPage} />
               <Route path='documents' Component={ProjectPage} />
-              
+
               <Route path=':projectId/tasks/:id' Component={TaskDetailPage} />
 
               <Route path=":id/">
                 <Route path="" Component={ProjectDetailPage} />
                 <Route path='edit' Component={EditProjectPage} />
-
 
                 <Route path='teams' Component={TeamPage} />
 
@@ -62,7 +61,6 @@ function App() {
                   </Route>
 
                 </Route>
-
 
                 <Route path='chat' Component={ChatPage} />
 

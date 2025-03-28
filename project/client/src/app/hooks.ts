@@ -146,6 +146,7 @@ export const useCreateTask = () => {
 
 export const useUpdateTask = () => {
     const queryClient = useQueryClient()
+    const navigate = useNavigate()
 
     return useMutation({
         mutationFn: (task: Omit<ITask, 'userid'>) => updateTask(task),
@@ -154,6 +155,7 @@ export const useUpdateTask = () => {
                 return oldTasks?.map((t) => (t.id === task.id ? { ...t, ...task } : t)) || []
             })
             queryClient.invalidateQueries({ queryKey: ["tasks", task.id] })
+            navigate(-1)
         },
     })
 }
