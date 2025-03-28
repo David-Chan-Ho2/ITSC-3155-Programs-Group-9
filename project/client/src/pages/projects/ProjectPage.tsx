@@ -4,6 +4,8 @@ import { useAppDispatch, useDeleteProject, useProjects } from "../../app/hooks"
 import { setProjectId } from "../../app/slices/projectSlice"
 import Button from "../../components/buttons/Button"
 import Link from "../../components/links/Link"
+import CreateProjectButton from "../../features/projects/CreateProjectButton"
+import EmptyProjects from "../../features/projects/EmptyProjects"
 import IProject from "../../types/projects.types"
 
 function ProjectPage() {
@@ -22,13 +24,15 @@ function ProjectPage() {
         dispatch(setProjectId(id))
     }
 
+    if (projects.length === 0) {
+        return <EmptyProjects />
+    }
+
     return (
         <>
-            <Button className="mb-10">
-                <NavLink to="/projects/create">Create Project</NavLink>
-            </Button>
+            <CreateProjectButton />
 
-            <form action="#" method="GET" className="grid flex-1 grid-cols-1 outline outline-gray-300 p-3">
+            <form action="#" method="GET" className="grid flex-1 grid-cols-1 outline outline-gray-300 p-3 mt-4">
                 <input
                     name="search"
                     type="search"
