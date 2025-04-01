@@ -3,7 +3,6 @@ export interface IDocument {
     projectId: number
     userId: number
     filePath: string
-    uploadedAt: string
     type: string
     title: string
     size: number

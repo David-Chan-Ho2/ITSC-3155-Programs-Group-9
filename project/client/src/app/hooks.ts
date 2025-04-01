@@ -98,6 +98,7 @@ export const useUpdateProject = () => {
                 return oldProjects?.map((t) => (t.id === project.id ? { ...t, ...project } : t)) || []
             })
             queryClient.invalidateQueries({ queryKey: ["projects", project.id] })
+            queryClient.invalidateQueries({ queryKey: ["project", project.id] })
             navigate(-1)
         },
     })

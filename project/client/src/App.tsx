@@ -35,46 +35,32 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<ProtectedRoute />}>
-          <Route Component={Layout}>
-            <Route path='/' Component={ProjectPage} />
+        <Route Component={Layout} element={<ProtectedRoute />}>
 
-            <Route path='projects/'>
-              <Route path='create' Component={CreateProjectPage} />
-              <Route path='teams' Component={ProjectPage} />
-              <Route path='documents' Component={ProjectPage} />
+          <Route path='/' Component={ProjectPage} />
 
-              <Route path=':projectId/tasks/:id' Component={TaskDetailPage} />
+          <Route path='/projects/create' Component={CreateProjectPage} />
 
-              <Route path=":id/">
-                <Route path="" Component={ProjectDetailPage} />
-                <Route path='edit' Component={EditProjectPage} />
+          <Route path="/projects/:id" Component={ProjectDetailPage} />
+          <Route path="/projects/:id/edit" Component={EditProjectPage} />
+          
+          <Route path='/projects/:projectId/tasks/:id' Component={TaskDetailPage} />
 
-                <Route path='teams' Component={TeamPage} />
+          <Route path='/projects/:id/teams' Component={TeamPage} />
 
-                <Route path='documents/'>
-                  <Route Component={DocumentPage} />
+          <Route path='/projects/:id/chat' Component={ChatPage} />
 
-                  <Route path=':id/'>
-                    <Route path="" Component={DocumentDetailPage} />
-                    <Route path='view' Component={ViewDocumentPage} />
-                  </Route>
+          <Route path='/projects/:id/calendar' Component={CalendarPage} />
 
-                </Route>
+          <Route path='/projects/:id/documents' Component={DocumentPage} />
+          <Route path='/projects/:id/documents/:id' Component={DocumentDetailPage} />
+          <Route path='/projects/:id/documents/:id/view' Component={ViewDocumentPage} />
 
-                <Route path='chat' Component={ChatPage} />
+          <Route path='/users/:id' Component={UserDetailPage} />
 
-                <Route path='calendar' Component={CalendarPage} />
-              </Route>
+          <Route path='/settings' Component={SettingPage} />
 
-            </Route>
-
-            <Route path='/users/:id' Component={UserDetailPage} />
-
-            <Route path='/settings' Component={SettingPage} />
-
-            <Route path='*' Component={NoMatchPage} />
-          </Route>
+          <Route path='*' Component={NoMatchPage} />
         </Route>
 
         <Route path='/register' Component={RegisterPage} />

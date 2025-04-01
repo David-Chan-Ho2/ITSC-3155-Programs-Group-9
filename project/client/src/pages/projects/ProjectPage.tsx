@@ -1,11 +1,10 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
+import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/outline"
 import { NavLink } from "react-router-dom"
 import { useAppDispatch, useDeleteProject, useProjects } from "../../app/hooks"
 import { setProjectId } from "../../app/slices/projectSlice"
 import Button from "../../components/buttons/Button"
+import EmptyState from "../../components/empty-state/EmptyState"
 import Link from "../../components/links/Link"
-import CreateProjectButton from "../../features/projects/CreateProjectButton"
-import EmptyProjects from "../../features/projects/EmptyProjects"
 import IProject from "../../types/projects.types"
 
 function ProjectPage() {
@@ -25,12 +24,21 @@ function ProjectPage() {
     }
 
     if (projects.length === 0) {
-        return <EmptyProjects />
+        return <EmptyState title="project" />
     }
 
     return (
         <>
-            <CreateProjectButton />
+            <NavLink to="/projects/create">
+                <button
+                    type="button"
+                    className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+
+                    <PlusIcon aria-hidden="true" className="-ml-0.5 mr-1.5 size-5" />
+                    New Project
+                </button>
+            </NavLink>
 
             <form action="#" method="GET" className="grid flex-1 grid-cols-1 outline outline-gray-300 p-3 mt-4">
                 <input

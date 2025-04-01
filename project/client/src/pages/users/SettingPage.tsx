@@ -1,18 +1,24 @@
+import { useAppSelector, useUser } from '../../app/hooks'
+import { selectUser } from '../../app/slices/userSlice'
 import Button from '../../components/buttons/Button'
 import Form from '../../components/forms/Form'
 import Input from '../../components/inputs/Input'
 
 function SettingPage() {
+    const { userId } = useAppSelector(selectUser)
+    const { data: user, isLoading } = useUser(userId)
+
     return (
         <>
             <Form>
                 <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-full">
                     <div className="col-span-full flex items-center gap-x-8">
-                        <img
+                        {isLoading ? <p>Loading...</p> : <img
                             alt=""
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            src={user?.profile_picture}
                             className="size-24 flex-none rounded-lg bg-gray-800 object-cover"
-                        />
+                        />}
+
                         <div>
                             <Button
                                 type="button"

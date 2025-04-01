@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 function NoMatchPage() {
+    const navigate = useNavigate()
+
     return (
         <>
             <p className="text-base/8 font-semibold text-indigo-600">404</p>
@@ -11,12 +13,12 @@ function NoMatchPage() {
                 Sorry, we couldn’t find the page you’re looking for.
             </p>
             <div className="mt-10">
-                <Link to="/" className="text-sm/7 font-semibold text-indigo-600">
+                <Link to="#" onClick={() => navigate(-1)} className="text-sm/7 font-semibold text-indigo-600">
                     Back to home
                 </Link>
             </div>
         </>
-    )   
+    )
 }
 
 export default NoMatchPage

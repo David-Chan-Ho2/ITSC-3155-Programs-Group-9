@@ -42,7 +42,6 @@ function CreateProjectPage() {
                     type="text"
                     value={form.description}
                     onChange={handleChange}
-                    required
                 />
                 <Button type="submit">
                     Create

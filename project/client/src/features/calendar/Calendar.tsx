@@ -3,9 +3,10 @@ import interactionPlugin from '@fullcalendar/interaction'
 import multiMonthPlugin from '@fullcalendar/multimonth'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import { Button, Input } from '@headlessui/react'
 import { useEvents, useForm } from '../../app/hooks'
+import Button from '../../components/buttons/Button'
 import Form from '../../components/forms/Form'
+import Input from '../../components/inputs/Input'
 
 const Calendar = () => {
     const { data, isLoading, error } = useEvents()
@@ -56,23 +57,6 @@ const Calendar = () => {
 
     return (
         <>
-            <Form>
-                <Input
-                    type="text"
-                    name="title"
-                    value={form.title}
-                    onChange={handleChange}
-                />
-                <Input
-                    type="text"
-                    name="description"
-                    value={form.description}
-                    onChange={handleChange}
-                />
-
-                <Button type="submit">Submit</Button>
-            </Form>
-
             {data &&
                 <FullCalendar
                     plugins={[multiMonthPlugin, dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -89,6 +73,25 @@ const Calendar = () => {
                     eventClick={handleEventClick}
                 />
             }
+
+            <Form>
+                <Input
+                    label="Title"
+                    type="text"
+                    name="title"
+                    value={form.title}
+                    onChange={handleChange}
+                />
+                <Input
+                    label="Description"
+                    type="text"
+                    name="description"
+                    value={form.description}
+                    onChange={handleChange}
+                />
+
+                <Button type="submit">Submit</Button>
+            </Form>
         </>
     )
 }
