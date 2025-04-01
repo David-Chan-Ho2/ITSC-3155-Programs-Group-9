@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from base.permissions import IsAdminRole
 from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics, filters
 
 class ProtectedView(APIView):
     permission_classes = [IsAuthenticated]
@@ -46,6 +47,8 @@ class EventViewSet(viewsets.ModelViewSet):
 class ProjectViewSet(viewsets.ModelViewSet):    
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name', 'description']
 
 # Task Views
 class TaskViewSet(viewsets.ModelViewSet):

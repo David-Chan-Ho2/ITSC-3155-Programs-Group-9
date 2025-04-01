@@ -83,8 +83,8 @@ export const useProject = (id: number) => {
     return useQuery<IProject, Error>({ queryKey: ['project', id], queryFn: () => getProject(id) })
 }
 
-export const useProjects = () => {
-    return useQuery<IProject[], Error>({ queryKey: ['projects'], queryFn: getProjects })
+export const useProjects = (search: string = '') => {
+    return useQuery<IProject[], Error>({ queryKey: ['projects'], queryFn: () => getProjects(search) })
 }
 
 export const useUpdateProject = () => {

@@ -4,8 +4,9 @@ import { BASE_URL } from './base.api'
 
 const url = BASE_URL + 'projects/'
 
-export async function getProjects(): Promise<IProject[]> {
-    const { data } = await axios.get(url)
+export async function getProjects(search: string = ''): Promise<IProject[]> {
+    const query = search ? `${url}?search=${search}` : url
+    const { data } = await axios.get(query)
     return data
 }
 

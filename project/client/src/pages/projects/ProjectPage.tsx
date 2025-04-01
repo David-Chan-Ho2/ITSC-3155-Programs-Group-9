@@ -1,14 +1,17 @@
 import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/outline"
+import { FormEvent, useState } from "react"
 import { NavLink } from "react-router-dom"
 import { useAppDispatch, useDeleteProject, useProjects } from "../../app/hooks"
 import { setProjectId } from "../../app/slices/projectSlice"
 import Button from "../../components/buttons/Button"
 import EmptyState from "../../components/empty-state/EmptyState"
+import Form from "../../components/forms/Form"
 import Link from "../../components/links/Link"
 import IProject from "../../types/projects.types"
 
 function ProjectPage() {
-    const { data: projects, isLoading, error } = useProjects()
+    const [search, setSearch] = useState('')
+    const { data: projects = [], isLoading, error, refetch } = useProjects(search)
     const deleteProjectMutation = useDeleteProject()
     const dispatch = useAppDispatch()
 
@@ -21,6 +24,11 @@ function ProjectPage() {
 
     const onLink = (id: number) => {
         dispatch(setProjectId(id))
+    }
+
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        refetch()
     }
 
     if (projects.length === 0) {
@@ -40,8 +48,10 @@ function ProjectPage() {
                 </button>
             </NavLink>
 
-            <form action="#" method="GET" className="grid flex-1 grid-cols-1 outline outline-gray-300 p-3 mt-4">
+            <Form className="grid flex-1 grid-cols-1 outline outline-gray-300 p-3 mt-4" onSubmit={onSubmit}>
                 <input
+                    onChange={(e) => setSearch(e.target.value)}
+                    value={search}
                     name="search"
                     type="search"
                     placeholder="Search"
@@ -52,7 +62,7 @@ function ProjectPage() {
                     aria-hidden="true"
                     className="pointer-events-none col-start-1 row-start-1 size-5 self-center text-gray-400"
                 />
-            </form>
+            </Form>
 
             <table>
                 <thead>
