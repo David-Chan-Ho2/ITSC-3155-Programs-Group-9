@@ -1,8 +1,8 @@
 export interface IDocument {
     id: number
-    projectId: number
-    userId: number
-    filePath: string
+    project: number
+    user: number
+    file_path: string
     type: string
     title: string
     size: number

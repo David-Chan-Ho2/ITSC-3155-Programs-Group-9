@@ -10,3 +10,11 @@ export default interface IProject {
     updated: string
     created: string
 }
+
+
+export enum IProjectStatus {
+    PLANNED = 'Planned',
+    IN_PROGRESS = 'In Progress',
+    COMPLETED = 'Completed',
+    ON_HOLD = 'On Hold'
+}

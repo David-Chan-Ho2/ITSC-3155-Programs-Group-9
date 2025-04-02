@@ -1,3 +1,4 @@
+import { Select } from '@headlessui/react'
 import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/outline"
 import { ChangeEvent, FormEvent, useState } from "react"
 import { NavLink } from "react-router-dom"
@@ -6,13 +7,15 @@ import { setProjectId } from "../../app/slices/projectSlice"
 import Button from "../../components/buttons/Button"
 import Form from "../../components/forms/Form"
 import Link from "../../components/links/Link"
-import IProject from "../../types/projects.types"
+import IProject, { IProjectStatus } from "../../types/projects.types"
 
 function ProjectPage() {
     const [search, setSearch] = useState('')
     const { data: projects = [], isLoading, error, refetch, } = useProjects(search)
     const deleteProjectMutation = useDeleteProject()
     const dispatch = useAppDispatch()
+    const projectStatus: string[] = Object.values(IProjectStatus)
+    const [filterStatus, setFilterStatus] = useState('')
 
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>
@@ -71,6 +74,16 @@ function ProjectPage() {
                     className="pointer-events-none col-start-1 row-start-1 size-5 self-center text-gray-400"
                 />
             </Form>
+
+            <div className='flex items-center gap-3'>
+                <label>Project Status</label>
+                <Select name="status" aria-label="Project status" className="my-2">
+                    <option>Pick status</option>
+                    {projectStatus.map((status) => (
+                        <option value={status}>{status}</option>
+                    ))}
+                </Select>
+            </div>
 
             <Button className="mt-3" onClick={onReset}>Reset</Button>
 

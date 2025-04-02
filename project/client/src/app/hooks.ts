@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from "react-router-dom"
 import { loginUser, registerUser } from "../api/auth.api"
-import { getDocuments } from "../api/documents.api"
+import { getDocument, getDocuments } from "../api/documents.api"
 import { getEvents } from "../api/events.api"
 import { createMessage, getMessages } from "../api/messages.api"
 import { createProject, deleteProject, getProject, getProjects, updateProject } from "../api/projects.api"
@@ -155,8 +155,7 @@ export const useUpdateTask = (nav: boolean = false) => {
             queryClient.setQueryData(["tasks"], (oldTasks: ITask[] | undefined) => {
                 return oldTasks?.map((t) => (t.id === task.id ? { ...t, ...task } : t)) || []
             })
-            queryClient.invalidateQueries({ queryKey: ["tasks", task.id] })
-            queryClient.invalidateQueries({ queryKey: ["project", task.project] })
+            queryClient.invalidateQueries({ queryKey: ["task", task.id] })
             if (nav)
                 navigate(-1)
         },
@@ -207,6 +206,10 @@ export const useUserProjects = (userId: number) => {
 // Documents 
 export const useDocuments = () => {
     return useQuery<IDocument[], Error>({ queryKey: ['documents'], queryFn: getDocuments })
+}
+
+export const useDocument = (id: number) => {
+    return useQuery<IDocument, Error>({ queryKey: ['document', id], queryFn: () => getDocument(id) })
 }
 
 // Messages 

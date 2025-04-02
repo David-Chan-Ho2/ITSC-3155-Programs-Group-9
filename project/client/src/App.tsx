@@ -43,7 +43,7 @@ function App() {
 
           <Route path="/projects/:id" Component={ProjectDetailPage} />
           <Route path="/projects/:id/edit" Component={EditProjectPage} />
-          
+
           <Route path='/projects/:projectId/tasks/:id' Component={TaskDetailPage} />
 
           <Route path='/projects/:id/teams' Component={TeamPage} />
@@ -53,8 +53,8 @@ function App() {
           <Route path='/projects/:id/calendar' Component={CalendarPage} />
 
           <Route path='/projects/:id/documents' Component={DocumentPage} />
-          <Route path='/projects/:id/documents/:id' Component={DocumentDetailPage} />
-          <Route path='/projects/:id/documents/:id/view' Component={ViewDocumentPage} />
+          <Route path='/documents/:id' Component={DocumentDetailPage} />
+          <Route path='/documents/:id/view' Component={ViewDocumentPage} />
 
           <Route path='/users/:id' Component={UserDetailPage} />
 

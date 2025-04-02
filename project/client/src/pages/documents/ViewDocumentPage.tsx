@@ -1,17 +1,30 @@
-import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer"
-import { useDocuments } from "../../app/hooks"
+
+import { useState } from "react"
+import { useParams } from "react-router-dom"
+import { useDocument } from "../../app/hooks"
 
 function ViewDocumentPage() {
-    const { data } = useDocuments()
+    const [numPages, setNumPages] = useState(null)
+    const [pageNumber, setPageNumber] = useState(1)
+    const params = useParams()
+    const { data: document, isLoading, error } = useDocument(Number(params.id))
 
-    const docs = data.map((d) => ({ uri: d.filePath }))
+    const onDocumentLoadSuccess = ({ numPages }) => {
+        setNumPages(numPages)
+    }
+
+    if (isLoading) return <p>Loading...</p>
+    if (error) return <p>Error: {error.message}</p>
 
     return (
-        <DocViewer
-            documents={docs}
-            initialActiveDocument={docs[1]}
-            pluginRenderers={DocViewerRenderers}
-        />
+        <div>
+            {/* <Document file={document?.file_path} onLoadSuccess={onDocumentLoadSuccess}>
+                <Page pageNumber={pageNumber} />
+            </Document>
+            <p>
+                Page {pageNumber} of {numPages}
+            </p> */}
+        </div>
     )
 }
 
