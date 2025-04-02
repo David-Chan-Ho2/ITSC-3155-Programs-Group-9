@@ -1,17 +1,16 @@
 import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/outline"
-import { FormEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useState } from "react"
 import { NavLink } from "react-router-dom"
 import { useAppDispatch, useDeleteProject, useProjects } from "../../app/hooks"
 import { setProjectId } from "../../app/slices/projectSlice"
 import Button from "../../components/buttons/Button"
-import EmptyState from "../../components/empty-state/EmptyState"
 import Form from "../../components/forms/Form"
 import Link from "../../components/links/Link"
 import IProject from "../../types/projects.types"
 
 function ProjectPage() {
     const [search, setSearch] = useState('')
-    const { data: projects = [], isLoading, error, refetch } = useProjects(search)
+    const { data: projects = [], isLoading, error, refetch, } = useProjects(search)
     const deleteProjectMutation = useDeleteProject()
     const dispatch = useAppDispatch()
 
@@ -26,14 +25,23 @@ function ProjectPage() {
         dispatch(setProjectId(id))
     }
 
-    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+    const onReset = () => {
+        setSearch('')
         refetch()
     }
 
-    if (projects.length === 0) {
-        return <EmptyState title="project" />
+    const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value)
+        refetch()
     }
+
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+    }
+
+    // if (projects.length === 0) {
+    //     return <EmptyState title="project" />
+    // }
 
     return (
         <>
@@ -50,7 +58,7 @@ function ProjectPage() {
 
             <Form className="grid flex-1 grid-cols-1 outline outline-gray-300 p-3 mt-4" onSubmit={onSubmit}>
                 <input
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={onSearch}
                     value={search}
                     name="search"
                     type="search"
@@ -64,6 +72,8 @@ function ProjectPage() {
                 />
             </Form>
 
+            <Button className="mt-3" onClick={onReset}>Reset</Button>
+
             <table>
                 <thead>
                     <tr>
@@ -76,7 +86,7 @@ function ProjectPage() {
                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                             Mentor
                         </th>
-                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 capitalize">
                             Status
                         </th>
                         <th className="px-3"></th>

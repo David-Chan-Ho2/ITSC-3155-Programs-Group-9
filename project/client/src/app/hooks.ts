@@ -84,7 +84,7 @@ export const useProject = (id: number) => {
 }
 
 export const useProjects = (search: string = '') => {
-    return useQuery<IProject[], Error>({ queryKey: ['projects'], queryFn: () => getProjects(search) })
+    return useQuery<IProject[], Error>({ queryKey: ['projects'], queryFn: () => getProjects(search), refetchIntervalInBackground: false, refetchOnWindowFocus: false, gcTime: 0 })
 }
 
 export const useUpdateProject = () => {
@@ -145,18 +145,20 @@ export const useCreateTask = () => {
     })
 }
 
-export const useUpdateTask = () => {
+export const useUpdateTask = (nav: boolean = false) => {
     const queryClient = useQueryClient()
     const navigate = useNavigate()
 
     return useMutation({
-        mutationFn: (task: Omit<ITask, 'userid'>) => updateTask(task),
+        mutationFn: (task: Partial<ITask>) => updateTask(task),
         onSuccess: (_, task) => {
             queryClient.setQueryData(["tasks"], (oldTasks: ITask[] | undefined) => {
                 return oldTasks?.map((t) => (t.id === task.id ? { ...t, ...task } : t)) || []
             })
             queryClient.invalidateQueries({ queryKey: ["tasks", task.id] })
-            navigate(-1)
+            queryClient.invalidateQueries({ queryKey: ["project", task.project] })
+            if (nav)
+                navigate(-1)
         },
     })
 }

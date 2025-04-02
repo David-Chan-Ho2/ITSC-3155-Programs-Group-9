@@ -10,7 +10,7 @@ function TaskDetailPage() {
     const params = useParams()
     const navigate = useNavigate()
     const { data, isLoading, error } = useTask(Number(params.id))
-    const updateTaskMutation = useUpdateTask()
+    const updateTaskMutation = useUpdateTask(true)
     const { form, handleChange, handleSubmit } = useForm<ITask>({
         ...data
     })
