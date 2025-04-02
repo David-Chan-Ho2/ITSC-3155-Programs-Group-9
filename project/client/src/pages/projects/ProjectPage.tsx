@@ -42,6 +42,10 @@ function ProjectPage() {
         e.preventDefault()
     }
 
+    const onStatus = (e: ChangeEvent<HTMLSelectElement>) => {
+        setFilterStatus(e.target.value)
+    }
+
     // if (projects.length === 0) {
     //     return <EmptyState title="project" />
     // }
@@ -77,10 +81,10 @@ function ProjectPage() {
 
             <div className='flex items-center gap-3'>
                 <label>Project Status</label>
-                <Select name="status" aria-label="Project status" className="my-2">
-                    <option>Pick status</option>
+                <Select name="status" aria-label="Project status" className="my-2" onChange={onStatus}>
+                    <option value="">Status</option>
                     {projectStatus.map((status) => (
-                        <option value={status}>{status}</option>
+                        <option key={status} value={status.toLowerCase()}>{status}</option>
                     ))}
                 </Select>
             </div>

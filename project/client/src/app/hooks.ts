@@ -155,6 +155,7 @@ export const useUpdateTask = (nav: boolean = false) => {
             queryClient.setQueryData(["tasks"], (oldTasks: ITask[] | undefined) => {
                 return oldTasks?.map((t) => (t.id === task.id ? { ...t, ...task } : t)) || []
             })
+            queryClient.invalidateQueries({ queryKey: ["project", task.project] })
             queryClient.invalidateQueries({ queryKey: ["task", task.id] })
             if (nav)
                 navigate(-1)
