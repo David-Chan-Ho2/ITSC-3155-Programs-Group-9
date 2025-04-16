@@ -8,7 +8,7 @@ export default interface IProject {
     mentor: number
     status: string
     tasks: ITask[]
-    manager: IUser | number
+    manager: number | IUser
     members: IUser[] | number[]
     updated: string
     created: string

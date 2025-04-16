@@ -103,7 +103,7 @@ function ProjectPage() {
                             Description
                         </th>
                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                            Mentor
+                            Manager
                         </th>
                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                             Status
@@ -118,13 +118,12 @@ function ProjectPage() {
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                     {projects.map((project: IProject) => (
-                        // <ProjectItem project={project} onLink={onLink} onDelete={onDelete} />
                         <tr key={project.id}>
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0  capitalize">
                                 {project.name}
                             </td>
                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  capitalize">{project.description}</td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{project.mentor}</td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{typeof project.manager === 'object' ? project.manager.full_name : project.manager}</td>
                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  capitalize">{project.status}</td>
                             <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                                 <Button>
