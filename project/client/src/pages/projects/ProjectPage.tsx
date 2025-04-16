@@ -120,7 +120,9 @@ function ProjectPage() {
                     {projects.map((project: IProject) => (
                         <tr key={project.id}>
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0  capitalize">
-                                {project.name}
+                                <NavLink to={`projects/${project.id}`}>
+                                    {project.name}
+                                </NavLink>
                             </td>
                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  capitalize">{project.description}</td>
                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{typeof project.manager === 'object' ? project.manager.full_name : project.manager}</td>
