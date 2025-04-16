@@ -39,35 +39,6 @@ class User(AbstractUser):
                 img.save(self.profile_picture.path)
     
 
-class Room(models.Model):
-    host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    name = models.CharField(max_length=200)
-    description = models.TextField(null=True, blank=True)
-    participants = models.ManyToManyField(
-        User, related_name='participants', blank=True)
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['-updated', '-created']
-
-    def __str__(self):
-        return self.name
-
-
-class Message(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    body = models.TextField()
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['-updated', '-created']
-
-    def __str__(self):
-        return self.body[0:50]
-
 
 class Event(models.Model):
     title = models.CharField(max_length=255)
@@ -98,7 +69,19 @@ class Project(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    manager = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    manager = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='owned_projects',
+        blank=True,
+        null=True
+    )
+    members = models.ManyToManyField(
+        User,
+        related_name='collaborations',
+        blank=True,
+        null=True
+    )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='planned')
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -109,6 +92,13 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        created = not self.pk
+        super().save(*args, **kwargs)
+        if created:
+            Room.objects.create(project=self)
+         
 
 class Task(models.Model):
     id = models.AutoField(primary_key=True)
@@ -169,4 +159,33 @@ class Document(models.Model):
         
         super().save(*args, **kwargs)
     
-    
+
+
+class Room(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True)
+    host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    participants = models.ManyToManyField(
+        User, related_name='participants', blank=True)
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-updated', '-created']
+
+    def __str__(self):
+        return self.name
+
+
+class Message(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    body = models.TextField()
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-updated', '-created']
+
+    def __str__(self):
+        return self.body[0:50]
+

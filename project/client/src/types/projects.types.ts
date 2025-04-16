@@ -1,4 +1,5 @@
 import { ITask } from "./tasks.types"
+import { IUser } from "./user.types"
 
 export default interface IProject {
     id: number
@@ -7,10 +8,11 @@ export default interface IProject {
     mentor: number
     status: string
     tasks: ITask[]
+    manager: IUser | number
+    members: IUser[] | number[]
     updated: string
     created: string
 }
-
 
 export enum IProjectStatus {
     PLANNED = 'Planned',

@@ -6,16 +6,18 @@ import { useAppDispatch, useDeleteProject, useProjects } from "../../app/hooks"
 import { setProjectId } from "../../app/slices/projectSlice"
 import Button from "../../components/buttons/Button"
 import Form from "../../components/forms/Form"
-import Link from "../../components/links/Link"
 import IProject, { IProjectStatus } from "../../types/projects.types"
 
 function ProjectPage() {
     const [search, setSearch] = useState('')
-    const { data: projects = [], isLoading, error, refetch, } = useProjects(search)
+    const { data = [], isLoading, error, refetch, } = useProjects(search)
     const deleteProjectMutation = useDeleteProject()
     const dispatch = useAppDispatch()
     const projectStatus: string[] = Object.values(IProjectStatus)
     const [filterStatus, setFilterStatus] = useState('')
+    const projects = filterStatus !== ''
+        ? data?.filter((project) => project.status.toLowerCase() === filterStatus)
+        : data
 
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>
@@ -91,7 +93,7 @@ function ProjectPage() {
 
             <Button className="mt-3" onClick={onReset}>Reset</Button>
 
-            <table>
+            <table className="min-w-full divide-y divide-gray-300">
                 <thead>
                     <tr>
                         <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
@@ -103,29 +105,28 @@ function ProjectPage() {
                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                             Mentor
                         </th>
-                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 capitalize">
+                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                             Status
                         </th>
-                        <th className="px-3"></th>
-                        <th></th>
+                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                            <span className="sr-only">Edit</span>
+                        </th>
+                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                            <span className="sr-only">Delete</span>
+                        </th>
                     </tr>
                 </thead>
-                <tbody>
-                    {projects?.map((project: IProject) => (
+                <tbody className="divide-y divide-gray-200">
+                    {projects.map((project: IProject) => (
+                        // <ProjectItem project={project} onLink={onLink} onDelete={onDelete} />
                         <tr key={project.id}>
-                            <td>
-                                <Link to={`/projects/${project.id}`} onClick={() => onLink(project.id)}>{project.name}</Link>
+                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0  capitalize">
+                                {project.name}
                             </td>
-                            <td>
-                                {project.description}
-                            </td>
-                            <td>
-                                {project.mentor}
-                            </td>
-                            <td>
-                                {project.status}
-                            </td>
-                            <td className="px-3">
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  capitalize">{project.description}</td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{project.mentor}</td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  capitalize">{project.status}</td>
+                            <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                                 <Button>
                                     <NavLink to={`/projects/${project.id}/edit`}>
                                         Edit

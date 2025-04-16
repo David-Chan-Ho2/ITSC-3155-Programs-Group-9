@@ -12,13 +12,14 @@ function CreateProjectPage() {
     const createProject = useCreateProject()
     const { userId } = useAppSelector(selectUser)
 
-    const { form, handleChange, handleSubmit } = useForm({
+    const { form, handleChange, handleSubmit } = useForm<Partial<IProject>>({
         name: '',
         description: '',
-        manager: userId
+        manager: userId,
+        members: [userId]
     })
 
-    const onSubmit = (formData: Omit<IProject, 'id'>) => {
+    const onSubmit = (formData: Partial<IProject>) => {
         createProject.mutate(formData)
     }
 

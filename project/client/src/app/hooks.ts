@@ -68,7 +68,7 @@ export const useAuth = () => {
 export const useCreateProject = () => {
     const navigate = useNavigate()
 
-    return useMutation<void, Error, Omit<IProject, 'id'>>({
+    return useMutation<void, Error, Partial<IProject>>({
         mutationFn: (data) => createProject(data),
         onSuccess: (data) => {
             navigate(-1)

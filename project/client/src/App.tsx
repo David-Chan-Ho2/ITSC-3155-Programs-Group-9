@@ -53,6 +53,7 @@ function App() {
           <Route path='/projects/:id/calendar' Component={CalendarPage} />
 
           <Route path='/projects/:id/documents' Component={DocumentPage} />
+          
           <Route path='/documents/:id' Component={DocumentDetailPage} />
           <Route path='/documents/:id/view' Component={ViewDocumentPage} />
 
