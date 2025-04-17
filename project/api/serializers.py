@@ -92,6 +92,15 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class RoomSerializer(serializers.ModelSerializer):
+    messages = MessageSerializer(many=True, read_only=True)
+    participants = UserSerializer(many=True, read_only=True)
+    
     class Meta:
         model = Room
         fields = '__all__'
+
+class MessageCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = '__all__'
+        read_only_fields = ['id']

@@ -1,45 +1,37 @@
-import { format } from 'date-fns'
 import React from 'react'
-import { useAppSelector, useCreateMessage, useForm, useMessages } from '../../app/hooks'
+import { useParams } from 'react-router-dom'
+import { useAppSelector, useCreateMessage, useForm, useRoom } from '../../app/hooks'
 import { selectUser } from '../../app/slices/userSlice'
 import Button from '../../components/buttons/Button'
 import Input from '../../components/inputs/Input'
-import MessageCard from './MessageCard'
+import Messages from './Messages'
 
 const ChatChannel: React.FC = () => {
+    const params = useParams()
+    const roomId = Number(params.id)
     const { userId } = useAppSelector(selectUser)
-    const { data: messages, isLoading, error } = useMessages()
-    const { mutate } = useCreateMessage()
+    const { data: room, isLoading, error } = useRoom(roomId)
+    const createMessage = useCreateMessage(roomId)
     const { handleSubmit, handleChange, form, resetForm } = useForm({
         user: userId,
-        room: 1,
-        body: '',
-        created: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
-        updated: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+        room: roomId,
+        body: ''
     })
+
 
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>
 
     const onSubmit = () => {
         if (form.body) {
-            mutate(form)
+            createMessage.mutate(form)
             resetForm()
         }
     }
 
     return (
         <>
-            <h1 className="text-xl font-bold mb-3">#name</h1>
-            <div className="h-96 overflow-y-auto border rounded-lg p-3 bg-gray-100">
-                {messages.length === 0 ? (
-                    <p className="text-gray-500">No messages yet. Start the conversation!</p>
-                ) : (
-                    messages.map((msg) => (
-                        <MessageCard key={msg.id} message={msg} />
-                    ))
-                )}
-            </div>
+            <Messages messages={room.messages} />
 
             <form className="flex gap-2" onSubmit={handleSubmit(onSubmit)}>
                 <Input

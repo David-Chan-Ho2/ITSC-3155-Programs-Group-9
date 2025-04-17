@@ -7,6 +7,7 @@ import { getDocument, getDocuments } from "../api/documents.api"
 import { getEvents } from "../api/events.api"
 import { createMessage, getMessages } from "../api/messages.api"
 import { createProject, deleteProject, getProject, getProjects, updateProject } from "../api/projects.api"
+import { getRoom } from "../api/room.api"
 import { createTask, deleteTask, getTask, updateTask } from "../api/tasks.api"
 import { getTeams } from "../api/teams.api"
 import { getUser, getUserProjects, getUsers } from '../api/users.api'
@@ -16,6 +17,7 @@ import { IDocument } from "../types/documents.types"
 import { IEvent } from "../types/events.types"
 import { IMessage } from "../types/messages.types"
 import IProject from "../types/projects.types"
+import { IRoom } from "../types/rooms.types"
 import { ITask } from "../types/tasks.types"
 import { ITeam } from "../types/teams.types"
 import { IUser } from "../types/user.types"
@@ -218,17 +220,17 @@ export const useMessages = () => {
     return useQuery<IMessage[], Error>({ queryKey: ['messages'], queryFn: getMessages })
 }
 
-export const useCreateMessage = () => {
+// Room
+export const useRoom = (id: number) => {
+    return useQuery<IRoom, Error>({ queryKey: ['room', id], queryFn: () => getRoom(id) })
+}
+
+export const useCreateMessage = (id: number) => {
     const queryClient = useQueryClient()
     return useMutation<void, Error, Partial<IMessage>>({
-        mutationFn: (newMessage) => createMessage(newMessage),
-        onSuccess: (_, createdMessage) => {
-            console.log('Create Message')
-            queryClient.setQueryData(["messages", createdMessage.id], (oldMessages: IMessage[] | undefined) => {
-                return oldMessages ? [...oldMessages, createdMessage] : [createdMessage]
-            })
-
-            queryClient.invalidateQueries({ queryKey: ["messages", createdMessage.id] })
+        mutationFn: (newMessage) => createMessage(id, newMessage),
+        onSuccess: (_, newMessage) => {
+            queryClient.invalidateQueries({ queryKey: ["room", newMessage.room] })
         },
         onError: (error: any) => {
             console.log(`Login failed: ${error.response?.data?.message || error.message}`)

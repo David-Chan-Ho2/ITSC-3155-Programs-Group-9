@@ -1,7 +1,8 @@
+import { IMessage } from "./messages.types"
+
 export interface IRoom {
     host: number
-    name: string
-    description: string
+    messages: IMessage[]
     updated: string
     created: string
 }
