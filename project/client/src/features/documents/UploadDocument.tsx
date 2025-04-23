@@ -1,8 +1,11 @@
-import axios from 'axios'
 import { ChangeEvent, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useCreateDocument } from '../../app/hooks'
 
 function UploadDocument() {
+    const params = useParams()
     const [file, setFile] = useState<File | null>(null)
+    const create = useCreateDocument()
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -10,25 +13,17 @@ function UploadDocument() {
         }
     }
 
-    const handleUpload = async () => {
+
+    const handleUpload = () => {
         if (!file) {
             alert("Please select a file first.")
             return
         }
 
         const formData = new FormData()
-        formData.append('title', file.name)
-        formData.append('file', file)
+        formData.append('file_path', file)
 
-        try {
-            const response = await axios.post('http://127.0.0.1:8000/api/documents/', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
-            })
-
-            console.log('Uploaded:', response.data)
-        } catch (error) {
-            console.error('Upload failed:', error)
-        }
+        create.mutate(formData)
     }
 
     return (

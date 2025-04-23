@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from "react-router-dom"
 import { loginUser, registerUser } from "../api/auth.api"
-import { getDocument, getDocuments } from "../api/documents.api"
+import { createDocument, getDocument, getDocuments } from "../api/documents.api"
 import { getEvents } from "../api/events.api"
 import { createMessage, getMessages } from "../api/messages.api"
 import { createProject, deleteProject, getProject, getProjects, updateProject } from "../api/projects.api"
@@ -213,6 +213,16 @@ export const useDocuments = () => {
 
 export const useDocument = (id: number) => {
     return useQuery<IDocument, Error>({ queryKey: ['document', id], queryFn: () => getDocument(id) })
+}
+
+export const useCreateDocument = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (formData: FormData) => createDocument(formData),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['documents']['documents'] })
+        },
+    })
 }
 
 // Messages 

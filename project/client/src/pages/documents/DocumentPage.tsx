@@ -20,10 +20,7 @@ function DocumentPage() {
     <>
       {documents.map((document: IDocument) =>
         <div className="flex gap-3">
-          <NavLink to={`/documents/${document.id}`}>{document.title}</NavLink>
-          <Button>
-            <NavLink to={`/documents/${document.id}/view`}>View</NavLink>
-          </Button>
+          <p>{document.title}</p>
           <Button>
             <NavLink to={`/documents/${document.id}/download`}>Download</NavLink>
           </Button>

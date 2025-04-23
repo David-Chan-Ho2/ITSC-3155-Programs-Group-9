@@ -14,7 +14,7 @@ export async function getDocument(id: number): Promise<IDocument> {
     return data
 }
 
-export async function createDocument(document: Partial<IDocument>): Promise<void> {
+export async function createDocument(document: FormData): Promise<void> {
     const { data } = await axios.post(url, document)
     return data
 }

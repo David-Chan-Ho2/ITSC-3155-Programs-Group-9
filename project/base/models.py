@@ -118,19 +118,9 @@ class Task(models.Model):
         return self.title
 
 class Document(models.Model):
-    TYPE_CHOICES = [
-        ('pdf', 'PDF'),
-        ('doc', 'DOC'),
-        ('txt', 'Text')
-    ]
-
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, null=True, blank=True, related_name='documents', on_delete=models.CASCADE)
-    project = models.ForeignKey(Project, null=True, blank=True, related_name='documents', on_delete=models.CASCADE)
     file_path = models.FileField(upload_to='documents/')
-    type = models.CharField(blank=True, null=True, max_length=10, choices=TYPE_CHOICES)
     title = models.CharField(blank=True,  null=True, max_length=255)
-    size = models.BigIntegerField(blank=True, null=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -139,7 +129,7 @@ class Document(models.Model):
         ordering = ['-updated']
 
     def __str__(self):
-        return f"{self.title} ({self.type})"
+        return self.title
     
     def save(self, *args, **kwargs):
         if self.file_path:
@@ -147,19 +137,13 @@ class Document(models.Model):
             if not self.title:
                 base_name = os.path.basename(self.file_path.name)
                 self.title = os.path.splitext(base_name)[0]
-
-            # Auto-set size
-            if not self.size:
-                self.size = self.file_path.size
-
-            # Auto-set type from file extension
-            ext = os.path.splitext(self.file_path.name)[1][1:].lower()
-            known_types = dict(self.TYPE_CHOICES).keys()
-            self.type = ext if ext in known_types else 'other'
         
         super().save(*args, **kwargs)
     
-
+    def post(self, request, *args, **kwargs):
+        print("FILES:", request.FILES)
+        print("DATA:", request.data)
+        return super().post(request, *args, **kwargs)
 
 class Room(models.Model):
     project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True)

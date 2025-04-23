@@ -10,7 +10,7 @@ import IProject, { IProjectStatus } from "../../types/projects.types"
 
 function ProjectPage() {
     const [search, setSearch] = useState('')
-    const { data = [], isLoading, error, refetch, } = useProjects(search)
+    const { data = [], isLoading, error, refetch } = useProjects(search)
     const deleteProjectMutation = useDeleteProject()
     const dispatch = useAppDispatch()
     const projectStatus: string[] = Object.values(IProjectStatus)
