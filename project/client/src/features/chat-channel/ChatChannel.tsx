@@ -18,7 +18,6 @@ const ChatChannel: React.FC = () => {
         body: ''
     })
 
-
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>
 
@@ -40,7 +39,7 @@ const ChatChannel: React.FC = () => {
                     onChange={handleChange}
                     placeholder="Type a message..."
                 />
-                <Button type='submit' className="flex items-center gap-1">
+                <Button type='submit'>
                     Send
                 </Button>
             </form>

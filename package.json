@@ -1,0 +1,17 @@
+{
+  "name": "ITSC-3155-Programs-Group-9",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/David-Chan-Ho2/ITSC-3155-Programs-Group-9.git",
+  "author": "David-Chan-Ho2 <dho12@charlotte.edu>",
+  "license": "MIT",
+  "scripts": {
+    "server": "python project/manage.py runserver",
+    "client": "cd project/client && yarn start",
+    "start": "concurrently \"yarn server\" \"yarn client\"",
+    "db": "python project/manage.py makemigrations && python project/manage.py migrate"
+  },
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
