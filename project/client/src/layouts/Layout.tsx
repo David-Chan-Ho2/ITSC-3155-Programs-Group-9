@@ -20,7 +20,7 @@ import {
 } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet } from 'react-router-dom'
 import { useAppDispatch, useAppSelector, usePathname, useUser } from '../app/hooks'
 import { selectProject } from '../app/slices/projectSlice'
 import { selectUser } from '../app/slices/userSlice'
@@ -38,11 +38,6 @@ interface ILink {
     current: boolean
 }
 
-const userNavigation = [
-    { name: 'Your profile', href: '#' },
-    { name: 'Sign out', href: '#' },
-]
-
 function Layout() {
     const { userId } = useAppSelector(selectUser)
     const dispatch = useAppDispatch()
@@ -57,6 +52,11 @@ function Layout() {
         // { name: 'Calendar', href: `projects/${projectId}/calendar`, icon: CalendarIcon, current: false },
         { name: 'Documents', href: `projects/${projectId}/documents`, icon: DocumentDuplicateIcon, current: false },
     ])
+
+    const userNavigation = [
+        { name: 'Your profile', href: `/users/${userId}` },
+        { name: 'Sign out', href: '/logout' },
+    ]
 
     const onLink = (href: string) => {
         setNavigation(prevNav =>
@@ -236,12 +236,12 @@ function Layout() {
                                 >
                                     {userNavigation.map((item) => (
                                         <MenuItem key={item.name}>
-                                            <a
-                                                href={item.href}
+                                            <NavLink
+                                                to={item.href}
                                                 className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
                                             >
                                                 {item.name}
-                                            </a>
+                                            </NavLink>
                                         </MenuItem>
                                     ))}
                                 </MenuItems>

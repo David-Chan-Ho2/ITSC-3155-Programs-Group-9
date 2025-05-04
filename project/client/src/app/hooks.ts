@@ -29,6 +29,13 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 
 // Auth
+const useLogout = () => {
+    const dispatch = useAppDispatch()
+
+    
+
+}
+
 const useLogin = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()

@@ -6,6 +6,7 @@ import { login } from './app/slices/authSlice'
 import ProtectedRoute from './components/route/ProtectedRoute'
 import Layout from './layouts/Layout'
 import LoginPage from './pages/auth/LoginPage'
+import LogoutPage from './pages/auth/LogoutPage'
 import RegisterPage from './pages/auth/RegisterPage'
 import CalendarPage from './pages/calendar/CalendarPage'
 import ChatPage from './pages/chat/ChatPage'
@@ -53,7 +54,7 @@ function App() {
           <Route path='/projects/:id/calendar' Component={CalendarPage} />
 
           <Route path='/projects/:id/documents' Component={DocumentPage} />
-          
+
           <Route path='/documents/:id' Component={DocumentDetailPage} />
           <Route path='/documents/:id/view' Component={ViewDocumentPage} />
 
@@ -66,6 +67,7 @@ function App() {
 
         <Route path='/register' Component={RegisterPage} />
         <Route path='/login' Component={LoginPage} />
+        <Route path='/logout' Component={LogoutPage} />
       </Routes>
     </BrowserRouter>
   )
