@@ -24,7 +24,7 @@ function MessageCard({ message }: IMessageCard) {
         </div>
         <div>
           <div className='flex align-center gap-3'>
-            <Link className="font-bold" to={`users/${user?.id}`}>{user?.full_name}</Link>
+            <Link className="font-bold" to={`/users/${user?.id}`}>{user?.full_name}</Link>
             <span className="text-gray-400 text-sm">{relativeTime}</span>
           </div>
           <p>{message.body}</p>

@@ -11,7 +11,6 @@ import {
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import {
     Bars3Icon,
-    CalendarIcon,
     ChatBubbleLeftIcon,
     Cog6ToothIcon,
     DocumentDuplicateIcon,
@@ -55,7 +54,7 @@ function Layout() {
         { name: 'Project', href: `projects/${projectId}`, icon: FolderIcon, current: true },
         { name: 'Chat', href: `projects/${projectId}/chat`, icon: ChatBubbleLeftIcon, current: false },
         { name: 'Team', href: `projects/${projectId}/teams`, icon: UsersIcon, current: false },
-        { name: 'Calendar', href: `projects/${projectId}/calendar`, icon: CalendarIcon, current: false },
+        // { name: 'Calendar', href: `projects/${projectId}/calendar`, icon: CalendarIcon, current: false },
         { name: 'Documents', href: `projects/${projectId}/documents`, icon: DocumentDuplicateIcon, current: false },
     ])
 
