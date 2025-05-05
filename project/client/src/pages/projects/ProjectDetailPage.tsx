@@ -1,11 +1,21 @@
-import { NavLink, useParams } from "react-router-dom"
+import { useEffect } from "react"
+import { NavLink, useLocation, useParams } from "react-router-dom"
 import { useProject } from "../../app/hooks"
+import { setProjectId } from "../../app/slices/projectSlice"
 import CreateTask from "../../features/tasks/CreateTask"
 import TaskList from "../../features/tasks/TaskList"
 
 function ProjectDetailPage() {
-    const params = useParams()
-    const { data: project, isLoading, error } = useProject(Number(params!.id))
+    const { id } = useParams()
+    const location = useLocation()
+
+    useEffect(() => {
+        if (id) {
+            setProjectId(Number(id))
+        }
+    }, [location.pathname])
+
+    const { data: project, isLoading, error } = useProject(Number(id))
 
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>
@@ -30,7 +40,7 @@ function ProjectDetailPage() {
                 </div>
             </div>
             <TaskList tasks={project?.tasks} />
-            <CreateTask projectId={Number(params.id)} />
+            <CreateTask />
         </>
     )
 }

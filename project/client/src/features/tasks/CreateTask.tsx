@@ -1,18 +1,19 @@
 import { Button } from "@headlessui/react"
 import { PlusIcon } from "@heroicons/react/24/solid"
+import { useParams } from "react-router-dom"
 import { useAppSelector, useCreateTask, useForm } from "../../app/hooks"
+import { selectProject } from "../../app/slices/projectSlice"
 import { selectUser } from "../../app/slices/userSlice"
 import Form from "../../components/forms/Form"
 import Input from "../../components/inputs/Input"
 import { ITask } from "../../types/tasks.types"
 
-interface ICreateTask {
-    projectId: number
-}
 
-function CreateTask({ projectId }: ICreateTask) {
+function CreateTask() {
+    const params = useParams()
     const { userId } = useAppSelector(selectUser)
     const createTask = useCreateTask()
+    const { projectId } = useAppSelector(selectProject)
 
     const { form, handleChange, handleSubmit } = useForm<Partial<ITask>>({
         user: userId,

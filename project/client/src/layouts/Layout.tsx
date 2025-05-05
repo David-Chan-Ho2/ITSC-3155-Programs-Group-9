@@ -22,7 +22,7 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import { useAppDispatch, useAppSelector, usePathname, useProjects, useUser } from '../app/hooks'
-import { selectProject } from '../app/slices/projectSlice'
+import { setProjectId } from '../app/slices/projectSlice'
 import { selectUser } from '../app/slices/userSlice'
 import Button from '../components/buttons/Button'
 import Logo from '../components/logo/Logo'
@@ -44,7 +44,6 @@ function Layout() {
     const { data: user, isLoading, error } = useUser(userId)
     const pathname = usePathname()
     const { data: projects = [], isLoading: projectLoading, error: projectError, refetch } = useProjects()
-    const { projectId } = useAppSelector(selectProject)
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [navigation, setNavigation] = useState<ILink[]>([
         { name: 'Chat', href: `/chat`, icon: ChatBubbleLeftIcon, current: false },
@@ -58,13 +57,8 @@ function Layout() {
         { name: 'Sign out', href: '/logout' },
     ]
 
-    const onLink = (href: string) => {
-        setNavigation(prevNav =>
-            prevNav.map(nav => ({
-                ...nav,
-                current: nav.href === href
-            }))
-        )
+    const onLink = (projectId: number) => {
+        dispatch(setProjectId(projectId))
     }
 
     return (
@@ -163,13 +157,13 @@ function Layout() {
                                             <li key={project.name} className='group flex gap-x-3   rounded-md p-2 pl-6 text-sm/6 font-semibold'>
                                                 <Link
                                                     to={`/projects/${project.id}`}
-                                                // className={clsx(
-                                                //     item.current
-                                                //         ? 'bg-gray-50 text-indigo-600'
-                                                //         : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
-                                                //     'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
-                                                // )}
-                                                // onClick={() => onLink(item.href)}
+                                                    // className={clsx(
+                                                    //     item.current
+                                                    //         ? 'bg-gray-50 text-indigo-600'
+                                                    //         : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
+                                                    //     'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
+                                                    // )}
+                                                    onClick={() => onLink(project.id)}
                                                 >
                                                     {project.name}
                                                 </Link>
@@ -185,7 +179,6 @@ function Layout() {
                                                             : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
                                                         'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                                                     )}
-                                                    onClick={() => onLink(item.href)}
                                                 >
                                                     <item.icon
                                                         aria-hidden="true"
