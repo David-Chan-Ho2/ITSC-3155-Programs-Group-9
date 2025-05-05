@@ -8,14 +8,13 @@ import TaskList from "../../features/tasks/TaskList"
 function ProjectDetailPage() {
     const { id } = useParams()
     const location = useLocation()
+    const { data: project, isLoading, error } = useProject(Number(id))
 
     useEffect(() => {
         if (id) {
             setProjectId(Number(id))
         }
     }, [location.pathname])
-
-    const { data: project, isLoading, error } = useProject(Number(id))
 
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>
@@ -40,7 +39,7 @@ function ProjectDetailPage() {
                 </div>
             </div>
             <TaskList tasks={project?.tasks} />
-            <CreateTask />
+            <CreateTask projectId={project.id} />
         </>
     )
 }

@@ -152,17 +152,14 @@ function Layout() {
                                                 className='size-6 shrink-0'
                                             />
                                             Projects
+                                            <Button>
+                                                <NavLink to="/projects/create" className="align-right">Create</NavLink>
+                                            </Button>
                                         </li>
                                         {projects.map((project) => (
                                             <li key={project.name} className='group flex gap-x-3   rounded-md p-2 pl-6 text-sm/6 font-semibold'>
                                                 <Link
                                                     to={`/projects/${project.id}`}
-                                                    // className={clsx(
-                                                    //     item.current
-                                                    //         ? 'bg-gray-50 text-indigo-600'
-                                                    //         : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
-                                                    //     'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
-                                                    // )}
                                                     onClick={() => onLink(project.id)}
                                                 >
                                                     {project.name}
