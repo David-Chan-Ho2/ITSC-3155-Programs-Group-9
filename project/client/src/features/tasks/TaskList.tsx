@@ -7,9 +7,9 @@ interface ITaskList {
 
 function TaskList({ tasks }: ITaskList) {
     return (
-        <ul>
+        <ul className="divide-y divide-gray-100 w-1/2">
             {tasks.map(task => (
-                <li key={`task-${task.id}`}>
+                <li key={`task-${task.id}`} className="flex justify-between gap-x-6 py-5">
                     <TaskItem task={task} />
                 </li>
             ))}

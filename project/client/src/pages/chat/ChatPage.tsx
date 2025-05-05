@@ -12,7 +12,7 @@ function ChatPage() {
     const createMessage = useCreateMessage(roomId)
     const { handleSubmit, handleChange, form, resetForm } = useForm({
         user: userId,
-        room: roomId,
+        room: 3,
         body: ''
     })
 

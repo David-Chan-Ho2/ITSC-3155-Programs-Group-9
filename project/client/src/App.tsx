@@ -45,15 +45,15 @@ function App() {
           <Route path="/projects/:id" Component={ProjectDetailPage} />
           <Route path="/projects/:id/edit" Component={EditProjectPage} />
 
-          <Route path='/projects/:projectId/tasks/:id' Component={TaskDetailPage} />
+          <Route path='/tasks/:id' Component={TaskDetailPage} />
 
-          <Route path='/projects/:id/teams' Component={TeamPage} />
+          <Route path='/teams' Component={TeamPage} />
 
-          <Route path='/projects/:id/chat' Component={ChatPage} />
+          <Route path='/chat' Component={ChatPage} />
 
-          <Route path='/projects/:id/calendar' Component={CalendarPage} />
+          <Route path='/calendar' Component={CalendarPage} />
 
-          <Route path='/projects/:id/documents' Component={DocumentPage} />
+          <Route path='/documents' Component={DocumentPage} />
 
           <Route path='/documents/:id' Component={DocumentDetailPage} />
           <Route path='/documents/:id/view' Component={ViewDocumentPage} />

@@ -21,7 +21,7 @@ import {
 import clsx from 'clsx'
 import { useState } from 'react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
-import { useAppDispatch, useAppSelector, usePathname, useUser } from '../app/hooks'
+import { useAppDispatch, useAppSelector, usePathname, useProjects, useUser } from '../app/hooks'
 import { selectProject } from '../app/slices/projectSlice'
 import { selectUser } from '../app/slices/userSlice'
 import Button from '../components/buttons/Button'
@@ -43,14 +43,14 @@ function Layout() {
     const dispatch = useAppDispatch()
     const { data: user, isLoading, error } = useUser(userId)
     const pathname = usePathname()
+    const { data: projects = [], isLoading: projectLoading, error: projectError, refetch } = useProjects()
     const { projectId } = useAppSelector(selectProject)
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [navigation, setNavigation] = useState<ILink[]>([
-        { name: 'Project', href: `projects/${projectId}`, icon: FolderIcon, current: true },
-        { name: 'Chat', href: `projects/${projectId}/chat`, icon: ChatBubbleLeftIcon, current: false },
-        { name: 'Team', href: `projects/${projectId}/teams`, icon: UsersIcon, current: false },
-        // { name: 'Calendar', href: `projects/${projectId}/calendar`, icon: CalendarIcon, current: false },
-        { name: 'Documents', href: `projects/${projectId}/documents`, icon: DocumentDuplicateIcon, current: false },
+        { name: 'Chat', href: `/chat`, icon: ChatBubbleLeftIcon, current: false },
+        { name: 'Team', href: `/teams`, icon: UsersIcon, current: false },
+        // { name: 'Calendar', href: `/calendar`, icon: CalendarIcon, current: false },
+        { name: 'Documents', href: `/documents`, icon: DocumentDuplicateIcon, current: false },
     ])
 
     const userNavigation = [
@@ -152,6 +152,29 @@ function Layout() {
                             <ul role="list" className="flex flex-1 flex-col gap-y-7">
                                 <li>
                                     <ul role="list" className="-mx-2 space-y-1">
+                                        <li className='group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold'>
+                                            <FolderIcon
+                                                aria-hidden="true"
+                                                className='size-6 shrink-0'
+                                            />
+                                            Projects
+                                        </li>
+                                        {projects.map((project) => (
+                                            <li key={project.name} className='group flex gap-x-3   rounded-md p-2 pl-6 text-sm/6 font-semibold'>
+                                                <Link
+                                                    to={`/projects/${project.id}`}
+                                                // className={clsx(
+                                                //     item.current
+                                                //         ? 'bg-gray-50 text-indigo-600'
+                                                //         : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
+                                                //     'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
+                                                // )}
+                                                // onClick={() => onLink(item.href)}
+                                                >
+                                                    {project.name}
+                                                </Link>
+                                            </li>
+                                        ))}
                                         {navigation.map((item) => (
                                             <li key={item.name}>
                                                 <Link
