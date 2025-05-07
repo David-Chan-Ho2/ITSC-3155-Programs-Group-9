@@ -125,7 +125,6 @@ function ProjectPage() {
                                 </NavLink>
                             </td>
                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  capitalize">{project.description}</td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{typeof project.manager === 'object' ? project.manager.full_name : project.manager}</td>
                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  capitalize">{project.status}</td>
                             <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                                 <Button>
