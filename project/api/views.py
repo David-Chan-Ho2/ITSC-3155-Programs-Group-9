@@ -1,14 +1,13 @@
 from rest_framework import filters
-from base.models import User, Document, Event, Project, Task, Room
-from .serializers import DocumentSerializer, EventSerializer, ProjectSerializer, RegisterSerializer, TaskSerializer, UserSerializer, RoomSerializer, MessageCreateSerializer
+from base.models import User, Document, Event, Project, Task, Room, Message
+from .serializers import DocumentSerializer, EventSerializer, ProjectSerializer, RegisterSerializer, TaskSerializer, UserSerializer, RoomSerializer, MessageSerializer, MessageCreateSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from base.permissions import IsAdminRole
 from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, filters
-from rest_framework import generics
+from rest_framework import generics, filters, status
 
 class ProtectedView(APIView):
     permission_classes = [IsAuthenticated]
@@ -39,6 +38,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
 
+
 # Event Views
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
@@ -67,4 +67,8 @@ class RoomViewSet(viewsets.ModelViewSet):
 class RoomMessageCreateView(generics.CreateAPIView):
     serializer_class = MessageCreateSerializer
 
+    
+class MessageViewSet(viewsets.ModelViewSet):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
     

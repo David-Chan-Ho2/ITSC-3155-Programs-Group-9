@@ -144,6 +144,7 @@ class Document(models.Model):
         print("FILES:", request.FILES)
         print("DATA:", request.data)
         return super().post(request, *args, **kwargs)
+ 
 
 class Room(models.Model):
     project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True)
