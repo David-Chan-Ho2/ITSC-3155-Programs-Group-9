@@ -76,10 +76,16 @@ export const useAuth = () => {
 // Project
 export const useCreateProject = () => {
     const navigate = useNavigate()
+    const queryClient = useQueryClient()
 
     return useMutation<void, Error, Partial<IProject>>({
         mutationFn: (data) => createProject(data),
-        onSuccess: (data) => {
+        onSuccess: (_, project) => {
+            queryClient.setQueryData(["projects"], (oldProjects: IProject[] | undefined) => {
+                return oldProjects?.map((t) => (t.id === project.id ? { ...t, ...project } : t)) || []
+            })
+            queryClient.invalidateQueries({ queryKey: ["projects", project.id] })
+            queryClient.invalidateQueries({ queryKey: ["project", project.id] })
             navigate(-1)
         },
         onError: (error: any) => {
