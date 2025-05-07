@@ -24,6 +24,7 @@ import { Link, NavLink, Outlet } from 'react-router-dom'
 import { useAppDispatch, useAppSelector, usePathname, useProjects, useUser } from '../app/hooks'
 import { setProjectId } from '../app/slices/projectSlice'
 import { selectUser } from '../app/slices/userSlice'
+import Avatar from '../components/avatar/Avatar'
 import Button from '../components/buttons/Button'
 import Logo from '../components/logo/Logo'
 import Notifications from '../features/notifications/Notifications'
@@ -231,10 +232,8 @@ function Layout() {
                             <Menu as="div" className="relative">
                                 <MenuButton className="-m-1.5 flex items-center p-1.5">
                                     <span className="sr-only">Open user menu</span>
-                                    <img
-                                        alt=""
-                                        src={user?.profile_picture}
-                                        className="size-8 rounded-full bg-gray-50"
+                                    <Avatar
+                                        avatar='/default_avatar.png'
                                     />
                                     <span className="hidden lg:flex lg:items-center">
                                         <span aria-hidden="true" className="ml-4 text-sm/6 font-semibold text-gray-900">
