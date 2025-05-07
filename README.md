@@ -6,6 +6,7 @@
 - David Ho
 
 # Description
+Helps users collaborate with other people on school group projects
 
 # Folder Structure
 - client: React frontend
@@ -25,7 +26,7 @@
 - React Query: Rest data management library for React
 - Headless UI: Component library for React
 - Axios: Rest calls for Javascript
-- Tailwind CSS:
+- Tailwind CSS: CSS library
 - Clsx: Conditional classname utility library
 
 ## Back End
