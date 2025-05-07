@@ -10,7 +10,7 @@ function ChatPage() {
     const { userId } = useAppSelector(selectUser)
     // const { data: room, isLoading, error } = useRoom(roomId)
     const { data: messages, isLoading, error } = useMessages()
-    const createMessage = useCreateMessage(roomId)
+    const createMessage = useCreateMessage()
     const { handleSubmit, handleChange, form, resetForm } = useForm({
         user: userId,
         room: 3,

@@ -14,8 +14,8 @@ export async function getMessage(id: number): Promise<IMessage> {
     return data
 }
 
-export async function createMessage(id: number, message: Partial<IMessage>): Promise<void> {
-    const { data } = await axios.post(`${BASE_URL}rooms/${id}/messages/`, message)
+export async function createMessage(message: Partial<IMessage>): Promise<void> {
+    const { data } = await axios.post(url, message)
     return data
 }
 

@@ -242,12 +242,16 @@ export const useRoom = (id: number) => {
     return useQuery<IRoom, Error>({ queryKey: ['room', id], queryFn: () => getRoom(id) })
 }
 
-export const useCreateMessage = (id: number) => {
+export const useCreateMessage = () => {
     const queryClient = useQueryClient()
+
     return useMutation<void, Error, Partial<IMessage>>({
-        mutationFn: (newMessage) => createMessage(id, newMessage),
-        onSuccess: (_, newMessage) => {
-            queryClient.invalidateQueries({ queryKey: ["room", newMessage.room] })
+        mutationFn: (newMessage) => createMessage(newMessage),
+        onSuccess: (_, createdMessage) => {
+            queryClient.setQueryData(["messages", createdMessage.id], (oldMessages: IMessage[] | undefined) => {
+                return oldMessages ? [...oldMessages, createdMessage] : [createdMessage]
+            })
+            queryClient.invalidateQueries({ queryKey: ["messages", createdMessage.id] })
         },
         onError: (error: any) => {
             console.log(`Login failed: ${error.response?.data?.message || error.message}`)

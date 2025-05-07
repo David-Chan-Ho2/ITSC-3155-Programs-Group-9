@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from base.permissions import IsAdminRole
 from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, filters, status
+from rest_framework import generics, filters
 
 class ProtectedView(APIView):
     permission_classes = [IsAuthenticated]
