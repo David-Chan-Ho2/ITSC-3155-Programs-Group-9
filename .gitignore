@@ -6,7 +6,7 @@ __pycache__/
 # C extensions
 *.so
 node_modules/
-media/
+media/documents/
 
 # Distribution / packaging
 .Python

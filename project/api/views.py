@@ -1,6 +1,6 @@
 from rest_framework import filters
-from base.models import User, Document, Event, Project, Task, Room, Message
-from .serializers import DocumentSerializer, EventSerializer, ProjectSerializer, RegisterSerializer, TaskSerializer, UserSerializer, RoomSerializer, MessageSerializer, MessageCreateSerializer
+from base.models import User, Document, Project, Task, Message
+from .serializers import DocumentSerializer, ProjectSerializer, TaskSerializer, UserSerializer, MessageSerializer, MessageCreateSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -38,12 +38,6 @@ class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
 
-
-# Event Views
-class EventViewSet(viewsets.ModelViewSet):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
-
 # Project Views
 class ProjectViewSet(viewsets.ModelViewSet):    
     queryset = Project.objects.all()
@@ -57,15 +51,6 @@ class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['project']
-
-# Room Views
-class RoomViewSet(viewsets.ModelViewSet):
-    queryset = Room.objects.all()
-    serializer_class = RoomSerializer
-
-
-class RoomMessageCreateView(generics.CreateAPIView):
-    serializer_class = MessageCreateSerializer
 
     
 class MessageViewSet(viewsets.ModelViewSet):

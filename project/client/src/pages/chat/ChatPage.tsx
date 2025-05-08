@@ -1,14 +1,10 @@
 import { Button, Input } from "@headlessui/react"
-import { useParams } from "react-router-dom"
 import { useAppSelector, useCreateMessage, useForm, useMessages } from "../../app/hooks"
 import { selectUser } from "../../app/slices/userSlice"
 import Messages from "../../features/chat-channel/Messages"
 
 function ChatPage() {
-    const params = useParams()
-    const roomId = Number(params.id)
     const { userId } = useAppSelector(selectUser)
-    // const { data: room, isLoading, error } = useRoom(roomId)
     const { data: messages, isLoading, error } = useMessages()
     const createMessage = useCreateMessage()
     const { handleSubmit, handleChange, form, resetForm } = useForm({

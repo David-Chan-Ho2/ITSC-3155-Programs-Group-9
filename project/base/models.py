@@ -39,25 +39,6 @@ class User(AbstractUser):
                 img.save(self.profile_picture.path)
     
 
-
-class Event(models.Model):
-    title = models.CharField(max_length=255)
-    start = models.DateTimeField()
-    end = models.DateTimeField()
-    description = models.TextField(blank=True)
-    all_day = models.BooleanField(default=False)
-    color = models.CharField(max_length=7, help_text="Hex code for text color (e.g., #FF5733)")
-    background_color = models.CharField(max_length=7, help_text="Hex code for background color (e.g., #C70039)")
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
-    
-    class Meta:
-        db_table = 'event'
-        ordering = ['start']
-
-    def __str__(self):
-        return self.title
-
 class Project(models.Model):
     STATUS_CHOICES = [
         ('planned', 'Planned'),
@@ -93,12 +74,6 @@ class Project(models.Model):
     def __str__(self):
         return self.name
     
-    def save(self, *args, **kwargs):
-        created = not self.pk
-        super().save(*args, **kwargs)
-        if created:
-            Room.objects.create(project=self)
-         
 
 class Task(models.Model):
     id = models.AutoField(primary_key=True)
@@ -145,19 +120,6 @@ class Document(models.Model):
         print("DATA:", request.data)
         return super().post(request, *args, **kwargs)
  
-
-class Room(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True)
-    host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    participants = models.ManyToManyField(
-        User, related_name='participants', blank=True)
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['-updated', '-created']
-
-
 
 class Message(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

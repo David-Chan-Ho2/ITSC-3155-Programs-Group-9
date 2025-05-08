@@ -16,10 +16,8 @@ router.register(r'projects', views.ProjectViewSet, basename='projects')
 # Tasks
 router.register(r'tasks', views.TaskViewSet)
 
-router.register(r'rooms', views.RoomViewSet)
 router.register(r'messages', views.MessageViewSet)
 router.register(r'documents', views.DocumentViewSet)
-router.register(r'events', views.EventViewSet)
 router.register(r'users', views.UserViewSet)
 
 # router.register(r'register', views.RegisterUserViewSet)
@@ -27,6 +25,4 @@ router.register(r'users', views.UserViewSet)
 urlpatterns = router.urls + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('rooms/<int:room_id>/messages/', views.RoomMessageCreateView.as_view(), 
-         name='room-create-message'),
 ]

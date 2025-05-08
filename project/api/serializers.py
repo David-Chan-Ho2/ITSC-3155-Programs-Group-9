@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
-from base.models import Document, Room, Message, User, Event, Project, Task
+from base.models import Document, Message, User, Project, Task
 
 class UserSerializer(serializers.ModelSerializer):
     profile_picture_url = serializers.SerializerMethodField()
@@ -55,12 +55,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
         return user
     
-
-class RoomSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Room
-        fields = '__all__'
-
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
@@ -70,12 +64,6 @@ class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
         fields = '__all__'
-
-class EventSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Event
-        fields = '__all__'
-
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
@@ -89,14 +77,6 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = '__all__'
-
-class RoomSerializer(serializers.ModelSerializer):
-    messages = MessageSerializer(many=True, read_only=True)
-    participants = UserSerializer(many=True, read_only=True)
-    
-    class Meta:
-        model = Room
         fields = '__all__'
 
 class MessageCreateSerializer(serializers.ModelSerializer):
