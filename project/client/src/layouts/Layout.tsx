@@ -27,6 +27,7 @@ import { selectUser } from '../app/slices/userSlice'
 import Avatar from '../components/avatar/Avatar'
 import Button from '../components/buttons/Button'
 import Logo from '../components/logo/Logo'
+import Loading from '../features/loading/Loading'
 
 interface ILink {
     name: string
@@ -60,6 +61,9 @@ function Layout() {
     const onLink = (projectId: number) => {
         dispatch(setProjectId(projectId))
     }
+
+    if (projectLoading) return <Loading />
+    if (projectError) return <p>Error: {projectError.message}</p>
 
     return (
         <div>
