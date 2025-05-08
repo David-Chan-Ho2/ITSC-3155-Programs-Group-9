@@ -1,11 +1,12 @@
 import { NavLink } from "react-router-dom"
 import { useUsers } from "../../app/hooks"
 import Avatar from "../../components/avatar/Avatar"
+import Loading from "../../features/loading/Loading"
 
 export default function TeamPage() {
     const { data, isLoading, error } = useUsers()
 
-    if (isLoading) return <p>Loading...</p>
+    if (isLoading) return <Loading />
     if (error) return <p>Error: {error.message}</p>
 
     return (
@@ -29,7 +30,7 @@ export default function TeamPage() {
                         <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
                             <div className="flex items-center">
                                 <div className="size-11 shrink-0">
-                                    <Avatar avatar='/default_avatar.png'/>
+                                    <Avatar avatar='/default_avatar.png' />
                                 </div>
                                 <div className="ml-4">
                                     <NavLink className="font-medium text-gray-900" to={`/users/${user.id}`}>{user.full_name}</NavLink>

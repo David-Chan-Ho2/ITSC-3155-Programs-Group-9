@@ -3,6 +3,7 @@ import { NavLink, useNavigate, useParams } from "react-router-dom"
 import { useForm, useProject, useUpdateProject } from "../../app/hooks"
 import Form from "../../components/forms/Form"
 import Input from "../../components/inputs/Input"
+import Loading from "../../features/loading/Loading"
 
 function EditProjectPage() {
     const params = useParams()
@@ -14,13 +15,10 @@ function EditProjectPage() {
     const updateProjectMutation = useUpdateProject()
     const navigate = useNavigate()
 
-    if (isLoading) {
-        return <p>Loading...</p>
-    }
+    if (isLoading) return <Loading />
 
-    if (error) {
-        return <p>{error.message}</p>
-    }
+    if (error) return <p>{error.message}</p>
+
 
     const onSubmit = () => {
         if (!form.description) {
@@ -38,7 +36,7 @@ function EditProjectPage() {
             <NavLink to='#' onClick={() => navigate(-1)}>Go back</NavLink>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Input
-                     label="Name"
+                    label="Name"
                     defaultValue={data?.name}
                     onChange={handleChange}
                     name="name"

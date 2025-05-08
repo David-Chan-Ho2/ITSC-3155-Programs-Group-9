@@ -2,19 +2,15 @@
 import { NavLink } from "react-router-dom"
 import { useDocuments } from "../../app/hooks"
 import Button from "../../components/buttons/Button"
-import EmptyState from "../../components/empty-state/EmptyState"
 import UploadDocument from "../../features/documents/UploadDocument"
+import Loading from "../../features/loading/Loading"
 import { IDocument } from "../../types/documents.types"
 
 function DocumentPage() {
   const { data: documents, isLoading, error } = useDocuments()
 
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <Loading />
   if (error) return <p>Error: {error.message}</p>
-
-  if (!documents) {
-    return <EmptyState title="document" />
-  }
 
   return (
     <>

@@ -4,6 +4,7 @@ import { useProject } from "../../app/hooks"
 import { setProjectId } from "../../app/slices/projectSlice"
 import CreateTask from "../../features/tasks/CreateTask"
 import TaskList from "../../features/tasks/TaskList"
+import Loading from "../../features/loading/Loading"
 
 function ProjectDetailPage() {
     const { id } = useParams()
@@ -16,7 +17,7 @@ function ProjectDetailPage() {
         }
     }, [location.pathname])
 
-    if (isLoading) return <p>Loading...</p>
+    if (isLoading) return <Loading />
     if (error) return <p>Error: {error.message}</p>
 
     return (

@@ -2,6 +2,7 @@ import { Button, Input } from "@headlessui/react"
 import { useAppSelector, useCreateMessage, useForm, useMessages } from "../../app/hooks"
 import { selectUser } from "../../app/slices/userSlice"
 import Messages from "../../features/chat-channel/Messages"
+import Loading from "../../features/loading/Loading"
 
 function ChatPage() {
     const { userId } = useAppSelector(selectUser)
@@ -13,7 +14,7 @@ function ChatPage() {
         body: ''
     })
 
-    if (isLoading) return <p>Loading...</p>
+    if (isLoading) return <Loading />
     if (error) return <p>Error: {error.message}</p>
 
     const onSubmit = () => {

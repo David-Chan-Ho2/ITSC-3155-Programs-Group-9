@@ -1,9 +1,7 @@
 import { ChangeEvent, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import { useCreateDocument } from '../../app/hooks'
 
 function UploadDocument() {
-    const params = useParams()
     const [file, setFile] = useState<File | null>(null)
     const create = useCreateDocument()
 
@@ -12,7 +10,6 @@ function UploadDocument() {
             setFile(e.target.files[0])
         }
     }
-
 
     const handleUpload = () => {
         if (!file) {

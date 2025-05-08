@@ -4,6 +4,7 @@ import { useForm, useTask, useUpdateTask } from "../../app/hooks"
 import Form from "../../components/forms/Form"
 import Input from "../../components/inputs/Input"
 import TextArea from "../../components/inputs/TextArea"
+import Loading from "../../features/loading/Loading"
 import { ITask } from "../../types/tasks.types"
 
 function TaskDetailPage() {
@@ -19,13 +20,8 @@ function TaskDetailPage() {
         updateTaskMutation.mutate({ ...data, ...form })
     }
 
-    if (isLoading) {
-        return <p>Loading...</p>
-    }
-
-    if (error) {
-        return <p>Error: {error.message}</p>
-    }
+    if (isLoading) return <Loading />
+    if (error) return <p>Error: {error.message}</p>
 
     return (
         <>

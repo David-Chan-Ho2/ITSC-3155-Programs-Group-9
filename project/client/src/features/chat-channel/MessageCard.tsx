@@ -3,6 +3,7 @@ import { useUser } from "../../app/hooks"
 import Avatar from "../../components/avatar/Avatar"
 import Link from '../../components/links/Link'
 import { IMessage } from "../../types/messages.types"
+import Loading from '../loading/Loading'
 
 interface IMessageCard {
   message: IMessage
@@ -13,7 +14,7 @@ function MessageCard({ message }: IMessageCard) {
   const messageTime = new Date(message.created)
   const relativeTime = formatDistanceToNow(messageTime, { addSuffix: true })
 
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <Loading />
   if (error) return <p>Error: {error.message}</p>
 
   return (

@@ -6,6 +6,7 @@ import { useAppDispatch, useDeleteProject, useProjects } from "../../app/hooks"
 import { setProjectId } from "../../app/slices/projectSlice"
 import Button from "../../components/buttons/Button"
 import Form from "../../components/forms/Form"
+import Loading from '../../features/loading/Loading'
 import IProject, { IProjectStatus } from "../../types/projects.types"
 
 function ProjectPage() {
@@ -19,7 +20,7 @@ function ProjectPage() {
         ? data?.filter((project) => project.status.toLowerCase() === filterStatus)
         : data
 
-    if (isLoading) return <p>Loading...</p>
+    if (isLoading) return <Loading />
     if (error) return <p>Error: {error.message}</p>
 
     const onDelete = (id: number) => {
@@ -47,10 +48,6 @@ function ProjectPage() {
     const onStatus = (e: ChangeEvent<HTMLSelectElement>) => {
         setFilterStatus(e.target.value)
     }
-
-    // if (projects.length === 0) {
-    //     return <EmptyState title="project" />
-    // }
 
     return (
         <>

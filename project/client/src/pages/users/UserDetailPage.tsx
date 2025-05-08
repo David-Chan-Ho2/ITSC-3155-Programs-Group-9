@@ -1,12 +1,13 @@
 import { useParams } from "react-router-dom"
 import { useUser } from "../../app/hooks"
 import Avatar from "../../components/avatar/Avatar"
+import Loading from "../../features/loading/Loading"
 
 function UserDetailPage() {
     const params = useParams()
     const { data: user, isLoading, error } = useUser(Number(params.id))
 
-    if (isLoading) return <p>Loading...</p>
+    if (isLoading) return <Loading />
     if (error) return <p>Error: {error.message}</p>
 
     return (

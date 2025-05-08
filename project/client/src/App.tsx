@@ -39,7 +39,6 @@ function App() {
           <Route path='/' Component={ProjectPage} />
 
           <Route path='/projects/create' Component={CreateProjectPage} />
-
           <Route path="/projects/:id" Component={ProjectDetailPage} />
           <Route path="/projects/:id/edit" Component={EditProjectPage} />
 

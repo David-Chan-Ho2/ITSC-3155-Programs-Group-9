@@ -27,7 +27,6 @@ import { selectUser } from '../app/slices/userSlice'
 import Avatar from '../components/avatar/Avatar'
 import Button from '../components/buttons/Button'
 import Logo from '../components/logo/Logo'
-import Notifications from '../features/notifications/Notifications'
 
 interface ILink {
     name: string
@@ -223,10 +222,6 @@ function Layout() {
                         <form action="#" method="GET" className="grid flex-1 grid-cols-1">
                         </form>
                         <div className="flex items-center gap-x-4 lg:gap-x-6">
-                            <Notifications />
-
-                            {/* Separator */}
-                            <div aria-hidden="true" className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-200" />
 
                             {/* Profile dropdown */}
                             <Menu as="div" className="relative">

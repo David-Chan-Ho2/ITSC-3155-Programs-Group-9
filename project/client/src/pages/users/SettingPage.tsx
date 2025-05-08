@@ -3,6 +3,7 @@ import { selectUser } from '../../app/slices/userSlice'
 import Button from '../../components/buttons/Button'
 import Form from '../../components/forms/Form'
 import Input from '../../components/inputs/Input'
+import Loading from '../../features/loading/Loading'
 
 function SettingPage() {
     const { userId } = useAppSelector(selectUser)
@@ -13,7 +14,7 @@ function SettingPage() {
             <Form>
                 <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-full">
                     <div className="col-span-full flex items-center gap-x-8">
-                        {isLoading ? <p>Loading...</p> : <img
+                        {isLoading ? <Loading /> : <img
                             alt=""
                             src={user?.profile_picture}
                             className="size-24 flex-none rounded-lg bg-gray-800 object-cover"
