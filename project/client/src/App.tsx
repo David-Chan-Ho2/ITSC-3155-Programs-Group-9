@@ -11,7 +11,6 @@ import RegisterPage from './pages/auth/RegisterPage'
 import ChatPage from './pages/chat/ChatPage'
 import DocumentDetailPage from './pages/documents/DocumentDetailPage'
 import DocumentPage from './pages/documents/DocumentPage'
-import ViewDocumentPage from './pages/documents/ViewDocumentPage'
 import NoMatchPage from './pages/NoMatchPage'
 import CreateProjectPage from './pages/projects/CreateProjectPage'
 import EditProjectPage from './pages/projects/EdittProjectPage'
@@ -51,9 +50,7 @@ function App() {
           <Route path='/chat' Component={ChatPage} />
 
           <Route path='/documents' Component={DocumentPage} />
-
           <Route path='/documents/:id' Component={DocumentDetailPage} />
-          <Route path='/documents/:id/view' Component={ViewDocumentPage} />
 
           <Route path='/users/:id' Component={UserDetailPage} />
 
