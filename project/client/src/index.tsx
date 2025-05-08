@@ -1,8 +1,6 @@
-import "@cyntler/react-doc-viewer/dist/index.css"
 import { QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import 'react-loading-skeleton/dist/skeleton.css'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import App from './App'
