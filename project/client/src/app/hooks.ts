@@ -4,20 +4,16 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from "react-router-dom"
 import { loginUser, registerUser } from "../api/auth.api"
 import { createDocument, getDocument, getDocuments } from "../api/documents.api"
-import { getEvents } from "../api/events.api"
 import { createMessage, getMessages } from "../api/messages.api"
 import { createProject, deleteProject, getProject, getProjects, updateProject } from "../api/projects.api"
-import { getRoom } from "../api/room.api"
 import { createTask, deleteTask, getTask, updateTask } from "../api/tasks.api"
 import { getTeams } from "../api/teams.api"
 import { getUser, getUserProjects, getUsers } from '../api/users.api'
 import { login } from "../app/slices/authSlice"
 import { IAuth, IToken } from "../types/auth.types"
 import { IDocument } from "../types/documents.types"
-import { IEvent } from "../types/events.types"
 import { IMessage } from "../types/messages.types"
 import IProject from "../types/projects.types"
-import { IRoom } from "../types/rooms.types"
 import { ITask } from "../types/tasks.types"
 import { ITeam } from "../types/teams.types"
 import { IUser } from "../types/user.types"
@@ -196,11 +192,6 @@ export const useDeleteTask = () => {
     })
 }
 
-// Events
-export const useEvents = () => {
-    return useQuery<IEvent[], Error>({ queryKey: ['events'], queryFn: getEvents })
-}
-
 // Teams
 export const useTeams = () => {
     return useQuery<ITeam[], Error>({ queryKey: ['teams'], queryFn: getTeams })
@@ -241,11 +232,6 @@ export const useCreateDocument = () => {
 // Messages 
 export const useMessages = () => {
     return useQuery<IMessage[], Error>({ queryKey: ['messages'], queryFn: getMessages })
-}
-
-// Room
-export const useRoom = (id: number) => {
-    return useQuery<IRoom, Error>({ queryKey: ['room', id], queryFn: () => getRoom(id) })
 }
 
 export const useCreateMessage = () => {

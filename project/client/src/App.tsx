@@ -8,7 +8,6 @@ import Layout from './layouts/Layout'
 import LoginPage from './pages/auth/LoginPage'
 import LogoutPage from './pages/auth/LogoutPage'
 import RegisterPage from './pages/auth/RegisterPage'
-import CalendarPage from './pages/calendar/CalendarPage'
 import ChatPage from './pages/chat/ChatPage'
 import DocumentDetailPage from './pages/documents/DocumentDetailPage'
 import DocumentPage from './pages/documents/DocumentPage'
@@ -50,8 +49,6 @@ function App() {
           <Route path='/teams' Component={TeamPage} />
 
           <Route path='/chat' Component={ChatPage} />
-
-          <Route path='/calendar' Component={CalendarPage} />
 
           <Route path='/documents' Component={DocumentPage} />
 
